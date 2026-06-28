@@ -1,0 +1,681 @@
+{
+  "total_proposals": 13,
+  "pdf_count": 9,
+  "docx_count": 4,
+  "records": [
+    {
+      "filename": "ahad CipherPlay_Proposal.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 132.9,
+      "title": "Ahad Cipherplay Proposal",
+      "description": "Mobile technology has become deeply embedded in children's daily lives, leading to a significant rise in sedentary behaviour and reduced physical activity among young age groups. Existing mobile games provide entertainment but fail to bridge the gap between screen time and physical engagement. Simul...",
+      "problem_statement": "& Gap Analysis 3.1 Health Risks of Sedentary Screen Time • Children aged 4-14 average 4-6 hours of daily passive screen time, leading to childhood obesity and impaired motor development. • Prolonged stationary activities like scrolling and static gaming cause a significant reduction in essential soc...",
+      "proposed_solution": "Limitation In CipherPlay Pokemon Go / AR Games Requires GPS and outdoor space; not suitable for young children indoors No YOLO Object Detection Not previously applied to children's game contexts Yes Software PRNG Encryption Not truly random, theoretically predictable No Commercial HRNG Devices Cost ...",
+      "technologies": "confirmed, hardware purchased, GitHub repo created M2 — Literature & UI/UX Weeks 3-5 (Oct 2026) Literature survey complete, UI wireframes finalized M3 — AI Object Detection Weeks 6-9 (Oct-Nov 2026) YO",
+      "target_users": "Primary Users Children aged 4-14 years playing under parental supervision at home. Secondary Users Parents seeking healthy, safe, and physically active digital alternatives to passive screen time for ",
+      "expected_impact": "s & KPIs 10.1 Product Outcome • A fully functional Android application combining real-time AI and adaptive gameplay. • Core features include on-device object detection, physical entropy-based encrypti",
+      "category": "Gaming & Entertainment",
+      "target_industry": "Entertainment",
+      "missing_fields": [],
+      "text_length": 18192,
+      "extraction_notes": []
+    },
+    {
+      "filename": "AI_Classroom_Noise_Notes_Proposal.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 4.7,
+      "title": "AI-Powered Real-Time Classroom Noise Detection and Automatic Lecture Notes Generator 2.",
+      "description": "noise. - Correct audio quality automatically. - Transcribe teacher speech. - Generate summarized lecture notes. Secondary Objectives: - Provide GUI for students and teachers. - Save audio, transcripts, and notes for future use. 5. Scope of the Project Included: audio classification, noise filtering,...",
+      "problem_statement": "Traditional lecture recordings often contain",
+      "proposed_solution": "Data Collection 2. Noise Classification Model (CNN/CRNN/Audio Transformers) 3. Real-Time Noise Filtering (DSP + AI) 4. Speech Recognition (Whisper) 5. Notes Generation (LLM Summarization) 6. System Integration (Python backend + UI) 8.",
+      "technologies": "Python, PyTorch, Whisper, Transformers, Librosa, Streamlit/FastAPI. 9.",
+      "target_users": "students to understand or revisit lectures.",
+      "expected_impact": "Noise classification, clean audio, transcript, auto-generated notes. 10. Feasibility Models run on normal laptops; datasets publicly available. 11. Timeline Requirements – 1 week Dataset – 2 weeks Mod",
+      "category": "Education & EdTech",
+      "target_industry": "Higher Education",
+      "missing_fields": [],
+      "text_length": 2447,
+      "extraction_notes": []
+    },
+    {
+      "filename": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "file_type": ".docx",
+      "file_size_kb": 36.6,
+      "title": "AI Smart Tuition Recommendation System 3. Project",
+      "description": "The AI Smart Tuition Recommendation System is an intelligent educational platform that helps students and parents find suitable tutors based on academic performance, weak subjects, budget, learning preferences, and location. The system uses Artificial Intelligence and Machine Learning algorithms to ...",
+      "problem_statement": "Students and parents often select tutors randomly without proper academic analysis, leading to poor educational outcomes and wasted time and money. 5. Major Functionality a. AI-based tutor recommendation system b. Student performance and weak subject analysis c. Personalized study planner and remind...",
+      "proposed_solution": "The proposed system will use Artificial Intelligence and Machine Learning algorithms to analyze student performance data and recommend tutors according to the student's academic weaknesses, preferred learning style, budget, and location. The system will also generate personalized study plans and mon...",
+      "technologies": "to be Used a. React / Flutter for frontend development b. Node.js / Django for backend development c. Python and Scikit-learn for AI model development 2. Skill to Learn During Project Building and tra",
+      "target_users": "Student Details Project Details 1.",
+      "expected_impact": "",
+      "category": "Education & EdTech",
+      "target_industry": "Higher Education",
+      "missing_fields": [
+        "expected_impact"
+      ],
+      "text_length": 2829,
+      "extraction_notes": []
+    },
+    {
+      "filename": "Final year project.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 453.5,
+      "title": "Project Description",
+      "description": "ScholarIQ is an AI-powered web platform designed to simplify and personalize the process of discovering international scholarships. The system uses intelligent algorithms to recommend scholarships tailored to a student's academic profile, nationality, and educational goals. Instead of storing or hos...",
+      "problem_statement": "Students across the world struggle to find genuine and relevant scholarships. Information is often scattered across various websites, outdated, or even fraudulent. Many students miss important deadlines or apply to irrelevant opportunities due to the lack of a centralized, smart platform. The absenc...",
+      "proposed_solution": "",
+      "technologies": "React.js with Bootstrap 5",
+      "target_users": "student's academic profile, nationality, and educational goals.",
+      "expected_impact": "on Society  Promotes Educational Equity – Makes quality opportunities accessible for everyone  Reduces Academic Stress – Provides alerts and accurate info to plan better  Improves Success Rates – P",
+      "category": "Education & EdTech",
+      "target_industry": "Higher Education",
+      "missing_fields": [
+        "proposed_solution"
+      ],
+      "text_length": 4156,
+      "extraction_notes": []
+    },
+    {
+      "filename": "FYP Pre.docx",
+      "file_type": ".docx",
+      "file_size_kb": 14.8,
+      "title": "Smart Relocation Assistance and Property Finder System 1.",
+      "description": "In Pakistan, individuals often face significant challenges when relocating to a new city for residence or investment purposes. Finding suitable property in unfamiliar areas, identifying reliable dealers, and managing post-move services such as transportation, utilities, and maintenance can be time-c...",
+      "problem_statement": "Users searching for property in another city face: Unstructured property search Difficulty finding trusted dealers Lack of relocation services in one platform No reliable rating system Poor access to local service information 3.",
+      "proposed_solution": "A web-based relocation platform that: Provides structured property search (City → Town → Block) Connects users with dealers and service providers Offers relocation services (transport, labour, cleaning) Displays utility/service providers Includes a rating and review system 4. Objectives Develop stru...",
+      "technologies": "React.js",
+      "target_users": "user feedback mechanisms.",
+      "expected_impact": "s Functional web application Structured property search system Integrated relocation services Transparent rating system 10. Novelty / Contribution Combines property + relocation services Area-based st",
+      "category": "General Software / AI",
+      "target_industry": "Information Technology",
+      "missing_fields": [
+        "technologies"
+      ],
+      "text_length": 2922,
+      "extraction_notes": []
+    },
+    {
+      "filename": "FYP Proposal.docx",
+      "file_type": ".docx",
+      "file_size_kb": 10.6,
+      "title": "AI-Based Retinal Disease Detection System Using Deep Learning 1. Problem Identification Retinal diseases such as Diabetic Retinopathy and Glaucoma can cause vision loss and blindness if not detected early. Currently, diagnosis is mostly done manually by ophthalmologists which is time-consuming and may not be easily accessible in rural areas. Therefore, there is a need for an automated system that can detect retinal diseases quickly and accurately using retinal fundus images. 2. Problem Solution The proposed system will use Deep Learning and Convolutional Neural Networks (CNN) to automatically detect retinal diseases from fundus images. The system will preprocess retinal images, extract important features, and classify whether the patient has diabetic retinopathy, glaucoma, or a normal retina. Poor access to local service information 3. Main Features Upload retinal fundus images AI-based disease detection Detection of diabetic retinopathy and glaucoma Image preprocessing and feature extraction Fast and accurate predictions User-friendly web application Remote monitoring support 4.",
+      "description": "",
+      "problem_statement": "",
+      "proposed_solution": "will use Deep Learning and Convolutional Neural Networks (CNN) to automatically detect retinal diseases from fundus images. The system will preprocess retinal images, extract important features, and classify whether the patient has diabetic retinopathy, glaucoma, or a normal retina. Poor access to l...",
+      "technologies": "Used Python TensorFlow / Keras OpenCV React JS FastAPI Google Colab 5. Objectives Develop an automated retinal disease detection system Reduce manual diagnosis effort Improve early disease detection P",
+      "target_users": "User-friendly web application Remote monitoring support 4.",
+      "expected_impact": "s The project will provide a smart AI-based healthcare system capable of detecting retinal diseases accurately and efficiently, helping in early diagnosis and prevention of blindness.",
+      "category": "Healthcare & Medical AI",
+      "target_industry": "Healthcare",
+      "missing_fields": [
+        "description",
+        "problem_statement"
+      ],
+      "text_length": 1630,
+      "extraction_notes": [
+        "Problem statement not found by section header",
+        "Description/introduction not clearly extracted"
+      ]
+    },
+    {
+      "filename": "FYP Proposal.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 347.8,
+      "title": "AI POWERED SMART PARKING AND SECURITY SYSTEM KEY WORDS: Automated Parking Management, Vehicle Surveillance System, IoT smart city DOMAIN OF THE PRODUCT: Smart Transportation & Security Systems (under Smart City Solutions) SUPERVISOR’S NAME: Ms. Atifa Arooj STUDENT INFORMATION Sr. Student ID Name Email Mobile .1 70135459 IMAN FAISAL 70135459@student.uol. edu.pk 0334-4777092 2 70139957 BILAL SHABBIR 70139957@student.uol. edu.pk 0300-5007912 Day Month Year DATE – – The University of Lahore – Final Year Project Proposal Page 2 1- Problem Identification: In urban areas, managing vehicle entry, parking, and security is increasingly challenging due to rising traffic, limited space, and reliance on manual systems. Traditional parking lots lack automation, causing long wait times, inefficient slot usage, and security vulnerabilities —such as unauthorized vehicle access or theft. There is a clear market gap for an integrated system that can automate parking management, enhance security, and provide real -time monitoring using AI and IoT",
+      "description": "",
+      "problem_statement": "",
+      "proposed_solution": "parking lot managers, housing societies, and corporate facility managers with demo offers. • Offer free pilot programs to showcase system value. 4. Partnerships & Integrators • Collaborate with CCTV installers, IoT integrators, and security companies to bundle our product as part of their offerings....",
+      "technologies": "Our project addresses this gap by introducing a smart , AI-powered solution that ensures efficient vehicle handling and robust security from entry to exit. 2- Product Market Analysis: •",
+      "target_users": "Our solution is designed for: • Commercial parking operators (malls, offices, hospitals) • Residential communities (apartment complexes, gated societies) • Smart city authorities integrating AI into u",
+      "expected_impact": "",
+      "category": "Smart Cities & IoT",
+      "target_industry": "Information Technology",
+      "missing_fields": [
+        "description",
+        "problem_statement",
+        "expected_impact"
+      ],
+      "text_length": 17033,
+      "extraction_notes": [
+        "Problem statement not found by section header",
+        "Description/introduction not clearly extracted"
+      ]
+    },
+    {
+      "filename": "FYP_C-PRMS 2.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 775.8,
+      "title": "Integrated Health Information System (IHIS) STUDENT INFORMATION Write down the detail of all group members in BLOCK LETTERS ONLY. Sr. Student ID Name Email Mobile 1. 70130657 MUHAMMAD ALI KHAN 70130657@STUDENT.UOL.EDU.PK 03002457979 2. 70132583 SYED SALMAN RIAZ BUKHARI 70132583@STUDENT.UOL.EDU.PK +92 303 4287278 3. FOR EVALUATOR’S ONLY Remarks: \u0000 Accepted \u0000 Accepted with Minor changes \u0000 Rejected",
+      "description": "• The Government of Pakistan has been actively promoting digital health initiatives to modernize healthcare delivery. • The National Health Vision 2016-2025 focuses on the need to improve data quality and leverage technology to enhance healthcare services. • However, the adoption of EHRs has been pa...",
+      "problem_statement": "The current healthcare system in Pakistan suffers a lot of inefficiency due to lack of interoperability. Paper-based records, siloed within individual healthcare institutions, hinder seamless patient care, impede research, and limit the government's ability to effectively plan and deliver public hea...",
+      "proposed_solution": ", specifically Scrum, to ensure flexibility, iterative development, and continuous improvement. • Scrum Framework: o The project will be divided into short sprints (e.g., 2-week sprints) with clearly defined goals and deliverables. The University of Lahore – Final Year Project Proposal Page 9 o Spri...",
+      "technologies": "• Project Management: Jira, Azure DevOps, Trello • Version Control: Git (hosted on GitHub) • Cloud Platform(Optional): AWS, Azure, or GCP • Containerization(Optional): Docker and Kubernetes • Programm",
+      "target_users": "STUDENT INFORMATION Sr.",
+      "expected_impact": "ful project with the potential to make a real difference in the world. FEATURES OF PROJECT 1. Patient Registration and Demographics: • Unique Patient Identifier: Assigning a unique and persistent iden",
+      "category": "Healthcare & Medical AI",
+      "target_industry": "Healthcare",
+      "missing_fields": [],
+      "text_length": 17034,
+      "extraction_notes": []
+    },
+    {
+      "filename": "FYP_Proposal_1.docx",
+      "file_type": ".docx",
+      "file_size_kb": 27.4,
+      "title": "AI-Based “Can I Resell This?” System for Waste-to-Value Optimization Project",
+      "description": "Our project is an AI-based system that helps users determine whether a used item should be sold, reused, repaired, or recycled. The user uploads an image of an item, and the system uses AI techniques to identify the object, analyze its condition, estimate resale value, and recommend the best possibl...",
+      "problem_statement": "People often throw away useful items without knowing their resale or recycling value, which increases waste and causes financial and environmental loss. Major Functionalities Object Detection using image input Condition Analysis of used items Resale Price Prediction Sell, Reuse, or Recycle Recommend...",
+      "proposed_solution": "Our project uses AI and image processing techniques to automatically detect items, analyze their condition, estimate resale value, and suggest the best action such as selling, repairing, reusing, or recycling. Learning",
+      "technologies": "to be Used: React.js / Flutter FastAPI / Flask TensorFlow, PyTorch, OpenCV, Firebase Skill to Learn Independently We will learn training and fine-tuning YOLO object detection models for real-world ima",
+      "target_users": "users determine whether a used item should be sold, reused, repaired, or recycled.",
+      "expected_impact": "",
+      "category": "General Software / AI",
+      "target_industry": "Higher Education",
+      "missing_fields": [
+        "expected_impact"
+      ],
+      "text_length": 2435,
+      "extraction_notes": []
+    },
+    {
+      "filename": "pixelwave (hrm) project proposal by group 2_260621_125121.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 245.8,
+      "title": "Building a Strategic HRM Framework for PixelWave ->",
+      "description": "PixelWave, as a tech startup, aims to establish a dynamic and scalable HRM system to foster talent acquisition, employee engagement, skill development, and performance optimization. This project proposes a structured",
+      "problem_statement": "",
+      "proposed_solution": "to design and implement HRM practices that align with PixelWave's goals, culture, and growth trajectory. By implementing best practices in HRM, PixelWave can improve employee satisfaction, retain talent, and drive productivity. ->Project Objectives: 1. Develop a Talent Acquisition Strategy: Identify...",
+      "technologies": "",
+      "target_users": "employee engagement, skill development, and performance optimization.",
+      "expected_impact": "",
+      "category": "Human Resources & HRM",
+      "target_industry": "Human Resources",
+      "missing_fields": [
+        "problem_statement",
+        "technologies",
+        "expected_impact"
+      ],
+      "text_length": 4879,
+      "extraction_notes": [
+        "Problem statement not found by section header"
+      ]
+    },
+    {
+      "filename": "Proposal CareerCraft V2.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 286.8,
+      "title": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI interview simulator, resume optimization, career preparation, NLP feedback, communication analysis, job readiness, ATS compatibility. DOMAIN OF THE PRODUCT: Career Development & Recruitment Technology SUPERVISOR’S NAME: Ms. Atifa Arooj STUDENT INFORMATION Sr. Student ID Name Email Mobile 1 70135459 IMAN FAISAL 70135459@student.uol. edu.pk 0334-4777092 2 70139957 BILAL SHABBIR 70139957@student.uol. edu.pk 0300-5007912 Day Month Year DATE – – The University of Lahore – Final Year Project Proposal Page 2 Problem Identification: Job seekers today struggle to prepare effectively for interviews and create resumes that match industry requirements. Existing resources such as career counselling sessions, online videos, and generic guides fail to deliver personalized, interactive, and real-time feedback. Current challenges include: • Lack of realistic, job-specific interview practice with adaptive questioning. • No evaluation of verbal and non-verbal communication such as tone, pace, confidence, and body language. • Resumes that do not align with specific job",
+      "description": "matching, skill gap detection, and AI-driven improvement suggestions. 5. Dashboard & Progress Tracking Month 5 Develop user dashboard, historical performance tracking, and feedback reporting system. 6. Testing & Optimization Month 6 Conduct internal testing, pilot testing with selected universities ...",
+      "problem_statement": "",
+      "proposed_solution": "will be implemented to reach individual users, educational institutions, and corporate clients. Target Market Segments • University students and fresh graduates preparing for placements. • Professionals seeking career advancement or industry change. • Universities, training institutes, and career co...",
+      "technologies": "Python (TensorFlow/PyTorch, OpenCV, spaCy, NLTK), Flutter, Node.js,",
+      "target_users": "Our solution is designed for: • University students preparing for campus placements. • Fresh graduates entering the job market. • Professionals seeking career advancement or industry transition. • Car",
+      "expected_impact": "ful responses using methods such as STAR (Situation, Task, Action, Result). • Tone & Intonation Training: Demonstrates confident and engaging delivery through AI- generated examples. • Body Language G",
+      "category": "Career & Employment",
+      "target_industry": "Career Services",
+      "missing_fields": [
+        "problem_statement"
+      ],
+      "text_length": 23572,
+      "extraction_notes": [
+        "Problem statement not found by section header"
+      ]
+    },
+    {
+      "filename": "Proposal.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 446.8,
+      "title": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion KEY WORDS: Artificial Intelligence, Computer Vision, YOLOv8, Thermal Imaging, RGB Fusion, Weapon Detection, Object Detection, Surveillance System DOMAIN OF THE PRODUCT: Artificial Intelligence, Computer Vision, Embedded Systems, Security & Surveillance SUPERVISOR’S NAME: Temur ul Hassan STUDENT INFORMATION Write in BLOCK LETTERS ONLY. Sr. Student ID Name Email Mobile .1 70138389 Arbaz Nasir Virk 70138389@student.uol. edu.pk 03235959583 2 70137013 Mukaram Ali Arshad 70137013@student.uol. edu.pk 0327 1140001 3 70138299 Arslan Anwar 70138299@student.uol.e du.pk 03035755858 Day Month Year DATE – – Note: Please read carefully “FYP Proposal Guidelines”, “Evaluation Form” & “Template Solution” before preparing FYP proposal. From this template remove all the guiding instruction before submitting the proposal including this text box too. The University of Lahore – Final Year Project Proposal Page 2 Please expand space according to answer 1- Problem Identification: Identify a real -world problem or a market gap that can be addressed through your project. This is the foundation of any entrepreneurial venture. In recent years, security threats involving weapons such as guns and knives have increased, creating a need for intelligent surveillance systems. Existing weapon detection systems mainly rely on RGB cameras, which perform poorly in low-light, foggy, or night-time environments. Additionally, many systems depend on expensive infrastructure and cloud-based processing, making them inaccessible for small-scale use. There is a clear need for a cost-effective, real-time weapon detection system that can operate reliably in all environmental conditions. This project addresses this gap by integrating thermal imaging with RGB cameras, enabling detection even in darkness or visually challenging scenarios. 1- Product Market Analysis: Conduct thorough market research to understand the",
+      "description": "",
+      "problem_statement": "",
+      "proposed_solution": "The market for AI-based surveillance systems is rapidly growing, especially in areas such as: ⚫ Smart cities ⚫ Security agencies ⚫ Airports and public places ⚫ Educational institutions Existing solutions like enterprise surveillance systems are expensive and require advanced infrastructure. Research...",
+      "technologies": "2) Data Collection & Preparation: Gather RGB and thermal weapon datasets, perform preprocessing and augmentation. 3) Image Fusion: Align and combine RGB and thermal images using suitable fusion techni",
+      "target_users": "for this system include: ⚫ Security organizations The University of Lahore – Final Year Project Proposal Page 3 ⚫ Government agencies ⚫ Small institutions (schools, offices) ⚫ Private security firms T",
+      "expected_impact": "",
+      "category": "Education & EdTech",
+      "target_industry": "Higher Education",
+      "missing_fields": [
+        "description",
+        "problem_statement",
+        "expected_impact"
+      ],
+      "text_length": 8572,
+      "extraction_notes": [
+        "Problem statement not found by section header",
+        "Description/introduction not clearly extracted"
+      ]
+    },
+    {
+      "filename": "qaiser11 fyp perposol.pdf",
+      "file_type": ".pdf",
+      "file_size_kb": 243.0,
+      "title": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career Coaching, Resume Builder, Cover Letter Generator, Mock Interviews, Job Preparation, Gemini API,WebRTC, Next.js, Vapi, Clerk, Prisma, PostgreSQL DOMAIN OF THE PRODUCT: Career Development / Artificial Intelligence / Web Application SUPERVISOR’S NAME: Taimur ul hassan STUDENT INFORMATION Sr. Student ID Name Email Mobile .1 70131605 Qaiser Shaban 70131605@student.uol.edu.pk 03485709552 2 70131286 Muhammad Zaid 70131286@student.uol.edu.pk 03069860118 3 70142878 Ammar Asad 70142878@student.uol.edu.pk 03007840701 1- Problem Identification: Job preparation is a fragmented process, forcing candidates to use separate tools for resumes, cover letters, and interview practice, which often yields generic results. 2 9 – 0 1 – 2 0 2 6 The University of Lahore – Final Year Project Proposal Page2 1- Product Market Analysis: The",
+      "description": "and suggests quantified,",
+      "problem_statement": "",
+      "proposed_solution": "",
+      "technologies": "\". The backend API routes are designed to be stateless to allow for horizontal scaling and high availability. The database schema is designed to handle increasing amounts of data and user traffic.  G",
+      "target_users": "for this project includes specific user classes:  Students and Fresh Graduates: This group is tech-savvy but may lack knowledge of professional hiring standards.  Career Switchers: These users are t",
+      "expected_impact": "ful rewrites.  Tailored Cover Letter Generator: Creates a focused and personalized cover letter that aligns the user's résumé with the job's requirements.  Dynamic Question Bank: Generates a list of",
+      "category": "General Software / AI",
+      "target_industry": "Career Services",
+      "missing_fields": [
+        "problem_statement",
+        "proposed_solution"
+      ],
+      "text_length": 6551,
+      "extraction_notes": [
+        "Problem statement not found by section header"
+      ]
+    }
+  ],
+  "pairwise_total": 78,
+  "exact_duplicates": [],
+  "near_duplicates": [],
+  "similar_domain_pairs": [
+    {
+      "file_a": "Proposal CareerCraft V2.pdf",
+      "file_b": "qaiser11 fyp perposol.pdf",
+      "title_a": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI i",
+      "title_b": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career",
+      "title_similarity": 2.35,
+      "content_similarity": 67.42,
+      "same_category": false,
+      "same_industry": true
+    },
+    {
+      "file_a": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "file_b": "FYP_Proposal_1.docx",
+      "title_a": "AI Smart Tuition Recommendation System 3. Project",
+      "title_b": "AI-Based “Can I Resell This?” System for Waste-to-Value Optimization Project",
+      "title_similarity": 44.8,
+      "content_similarity": 60.02,
+      "same_category": false,
+      "same_industry": true
+    },
+    {
+      "file_a": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "file_b": "Final year project.pdf",
+      "title_a": "AI Smart Tuition Recommendation System 3. Project",
+      "title_b": "Project Description",
+      "title_similarity": 20.59,
+      "content_similarity": 54.94,
+      "same_category": true,
+      "same_industry": true
+    },
+    {
+      "file_a": "FYP_Proposal_1.docx",
+      "file_b": "qaiser11 fyp perposol.pdf",
+      "title_a": "AI-Based “Can I Resell This?” System for Waste-to-Value Optimization Project",
+      "title_b": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career",
+      "title_similarity": 1.84,
+      "content_similarity": 53.96,
+      "same_category": true,
+      "same_industry": false
+    },
+    {
+      "file_a": "FYP Proposal.docx",
+      "file_b": "FYP_C-PRMS 2.pdf",
+      "title_a": "AI-Based Retinal Disease Detection System Using Deep Learning 1. Problem Identif",
+      "title_b": "Integrated Health Information System (IHIS) STUDENT INFORMATION Write down the d",
+      "title_similarity": 0.54,
+      "content_similarity": 51.3,
+      "same_category": true,
+      "same_industry": true
+    },
+    {
+      "file_a": "FYP_Proposal_1.docx",
+      "file_b": "Proposal.pdf",
+      "title_a": "AI-Based “Can I Resell This?” System for Waste-to-Value Optimization Project",
+      "title_b": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion K",
+      "title_similarity": 2.14,
+      "content_similarity": 49.68,
+      "same_category": false,
+      "same_industry": true
+    },
+    {
+      "file_a": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "file_b": "Proposal.pdf",
+      "title_a": "AI Smart Tuition Recommendation System 3. Project",
+      "title_b": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion K",
+      "title_similarity": 1.09,
+      "content_similarity": 45.71,
+      "same_category": true,
+      "same_industry": true
+    },
+    {
+      "file_a": "Final year project.pdf",
+      "file_b": "FYP_Proposal_1.docx",
+      "title_a": "Project Description",
+      "title_b": "AI-Based “Can I Resell This?” System for Waste-to-Value Optimization Project",
+      "title_similarity": 14.74,
+      "content_similarity": 44.36,
+      "same_category": false,
+      "same_industry": true
+    },
+    {
+      "file_a": "Final year project.pdf",
+      "file_b": "Proposal.pdf",
+      "title_a": "Project Description",
+      "title_b": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion K",
+      "title_similarity": 0.7,
+      "content_similarity": 43.35,
+      "same_category": true,
+      "same_industry": true
+    },
+    {
+      "file_a": "AI_Classroom_Noise_Notes_Proposal.pdf",
+      "file_b": "Final year project.pdf",
+      "title_a": "AI-Powered Real-Time Classroom Noise Detection and Automatic Lecture Notes Gener",
+      "title_b": "Project Description",
+      "title_similarity": 22.64,
+      "content_similarity": 39.34,
+      "same_category": true,
+      "same_industry": true
+    }
+  ],
+  "top_similarity": [
+    {
+      "file_a": "FYP_C-PRMS 2.pdf",
+      "file_b": "qaiser11 fyp perposol.pdf",
+      "title_a": "Integrated Health Information System (IHIS) STUDENT INFORMATION Write down the d",
+      "title_b": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career",
+      "title_similarity": 5.23,
+      "content_similarity": 67.97,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "Proposal CareerCraft V2.pdf",
+      "file_b": "qaiser11 fyp perposol.pdf",
+      "title_a": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI i",
+      "title_b": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career",
+      "title_similarity": 2.35,
+      "content_similarity": 67.42,
+      "same_category": false,
+      "same_industry": true
+    },
+    {
+      "file_a": "FYP Proposal.pdf",
+      "file_b": "Proposal CareerCraft V2.pdf",
+      "title_a": "AI POWERED SMART PARKING AND SECURITY SYSTEM KEY WORDS: Automated Parking Manage",
+      "title_b": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI i",
+      "title_similarity": 27.45,
+      "content_similarity": 65.44,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "FYP_C-PRMS 2.pdf",
+      "file_b": "Proposal CareerCraft V2.pdf",
+      "title_a": "Integrated Health Information System (IHIS) STUDENT INFORMATION Write down the d",
+      "title_b": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI i",
+      "title_similarity": 11.41,
+      "content_similarity": 62.94,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "Proposal.pdf",
+      "file_b": "qaiser11 fyp perposol.pdf",
+      "title_a": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion K",
+      "title_b": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career",
+      "title_similarity": 2.29,
+      "content_similarity": 62.33,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "FYP Proposal.pdf",
+      "file_b": "Proposal.pdf",
+      "title_a": "AI POWERED SMART PARKING AND SECURITY SYSTEM KEY WORDS: Automated Parking Manage",
+      "title_b": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion K",
+      "title_similarity": 10.01,
+      "content_similarity": 61.78,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "FYP_C-PRMS 2.pdf",
+      "file_b": "Proposal.pdf",
+      "title_a": "Integrated Health Information System (IHIS) STUDENT INFORMATION Write down the d",
+      "title_b": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion K",
+      "title_similarity": 12.05,
+      "content_similarity": 61.45,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "pixelwave (hrm) project proposal by group 2_260621_125121.pdf",
+      "file_b": "Proposal CareerCraft V2.pdf",
+      "title_a": "Building a Strategic HRM Framework for PixelWave ->",
+      "title_b": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI i",
+      "title_similarity": 1.0,
+      "content_similarity": 60.33,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "file_b": "FYP_Proposal_1.docx",
+      "title_a": "AI Smart Tuition Recommendation System 3. Project",
+      "title_b": "AI-Based “Can I Resell This?” System for Waste-to-Value Optimization Project",
+      "title_similarity": 44.8,
+      "content_similarity": 60.02,
+      "same_category": false,
+      "same_industry": true
+    },
+    {
+      "file_a": "FYP Proposal.pdf",
+      "file_b": "FYP_C-PRMS 2.pdf",
+      "title_a": "AI POWERED SMART PARKING AND SECURITY SYSTEM KEY WORDS: Automated Parking Manage",
+      "title_b": "Integrated Health Information System (IHIS) STUDENT INFORMATION Write down the d",
+      "title_similarity": 1.67,
+      "content_similarity": 58.7,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "file_b": "Proposal CareerCraft V2.pdf",
+      "title_a": "AI Smart Tuition Recommendation System 3. Project",
+      "title_b": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI i",
+      "title_similarity": 1.51,
+      "content_similarity": 58.56,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "FYP Proposal.pdf",
+      "file_b": "qaiser11 fyp perposol.pdf",
+      "title_a": "AI POWERED SMART PARKING AND SECURITY SYSTEM KEY WORDS: Automated Parking Manage",
+      "title_b": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career",
+      "title_similarity": 2.98,
+      "content_similarity": 57.9,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "ahad CipherPlay_Proposal.pdf",
+      "file_b": "qaiser11 fyp perposol.pdf",
+      "title_a": "Ahad Cipherplay Proposal",
+      "title_b": "An AI-Powered Career Coaching and Job Preparation Platform KEY WORDS: AI, Career",
+      "title_similarity": 0.65,
+      "content_similarity": 57.12,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "FYP_C-PRMS 2.pdf",
+      "file_b": "pixelwave (hrm) project proposal by group 2_260621_125121.pdf",
+      "title_a": "Integrated Health Information System (IHIS) STUDENT INFORMATION Write down the d",
+      "title_b": "Building a Strategic HRM Framework for PixelWave ->",
+      "title_similarity": 12.03,
+      "content_similarity": 56.53,
+      "same_category": false,
+      "same_industry": false
+    },
+    {
+      "file_a": "Proposal CareerCraft V2.pdf",
+      "file_b": "Proposal.pdf",
+      "title_a": "CareerCraft AI - Intelligent Interview & Resume Mastery Platform KEY WORDS: AI i",
+      "title_b": "AI-Based Real -Time Weapon Detection System Using Thermal and RGB Image Fusion K",
+      "title_similarity": 4.1,
+      "content_similarity": 56.07,
+      "same_category": false,
+      "same_industry": false
+    }
+  ],
+  "import_readiness": [
+    {
+      "filename": "ahad CipherPlay_Proposal.pdf",
+      "fields_present": 7,
+      "fields_total": 7,
+      "missing": [],
+      "import_ready": true,
+      "blockers": []
+    },
+    {
+      "filename": "AI_Classroom_Noise_Notes_Proposal.pdf",
+      "fields_present": 7,
+      "fields_total": 7,
+      "missing": [],
+      "import_ready": true,
+      "blockers": []
+    },
+    {
+      "filename": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "fields_present": 6,
+      "fields_total": 7,
+      "missing": [
+        "expected_impact"
+      ],
+      "import_ready": true,
+      "blockers": []
+    },
+    {
+      "filename": "Final year project.pdf",
+      "fields_present": 6,
+      "fields_total": 7,
+      "missing": [
+        "proposed_solution"
+      ],
+      "import_ready": true,
+      "blockers": []
+    },
+    {
+      "filename": "FYP Pre.docx",
+      "fields_present": 6,
+      "fields_total": 7,
+      "missing": [
+        "technologies"
+      ],
+      "import_ready": true,
+      "blockers": []
+    },
+    {
+      "filename": "FYP Proposal.docx",
+      "fields_present": 5,
+      "fields_total": 7,
+      "missing": [
+        "description",
+        "problem_statement"
+      ],
+      "import_ready": true,
+      "blockers": [
+        "Problem statement not found by section header",
+        "Description/introduction not clearly extracted"
+      ]
+    },
+    {
+      "filename": "FYP Proposal.pdf",
+      "fields_present": 4,
+      "fields_total": 7,
+      "missing": [
+        "description",
+        "problem_statement",
+        "expected_impact"
+      ],
+      "import_ready": false,
+      "blockers": [
+        "Problem statement not found by section header",
+        "Description/introduction not clearly extracted",
+        "Missing: description, problem_statement, expected_impact"
+      ]
+    },
+    {
+      "filename": "FYP_C-PRMS 2.pdf",
+      "fields_present": 7,
+      "fields_total": 7,
+      "missing": [],
+      "import_ready": true,
+      "blockers": []
+    },
+    {
+      "filename": "FYP_Proposal_1.docx",
+      "fields_present": 6,
+      "fields_total": 7,
+      "missing": [
+        "expected_impact"
+      ],
+      "import_ready": true,
+      "blockers": []
+    },
+    {
+      "filename": "pixelwave (hrm) project proposal by group 2_260621_125121.pdf",
+      "fields_present": 4,
+      "fields_total": 7,
+      "missing": [
+        "problem_statement",
+        "technologies",
+        "expected_impact"
+      ],
+      "import_ready": false,
+      "blockers": [
+        "Problem statement not found by section header",
+        "Missing: problem_statement, technologies, expected_impact"
+      ]
+    },
+    {
+      "filename": "Proposal CareerCraft V2.pdf",
+      "fields_present": 6,
+      "fields_total": 7,
+      "missing": [
+        "problem_statement"
+      ],
+      "import_ready": true,
+      "blockers": [
+        "Problem statement not found by section header"
+      ]
+    },
+    {
+      "filename": "Proposal.pdf",
+      "fields_present": 4,
+      "fields_total": 7,
+      "missing": [
+        "description",
+        "problem_statement",
+        "expected_impact"
+      ],
+      "import_ready": false,
+      "blockers": [
+        "Problem statement not found by section header",
+        "Description/introduction not clearly extracted",
+        "Missing: description, problem_statement, expected_impact"
+      ]
+    },
+    {
+      "filename": "qaiser11 fyp perposol.pdf",
+      "fields_present": 5,
+      "fields_total": 7,
+      "missing": [
+        "problem_statement",
+        "proposed_solution"
+      ],
+      "import_ready": true,
+      "blockers": [
+        "Problem statement not found by section header"
+      ]
+    }
+  ],
+  "import_ready_count": 10
+}

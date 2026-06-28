@@ -1,0 +1,16 @@
+{
+  "include": ["backend/app", "backend/tests", "backend/scripts", "backend/alembic"],
+  "exclude": ["**/node_modules", "**/__pycache__", "Frontend"],
+  "extraPaths": ["backend"],
+  "pythonVersion": "3.12",
+  "pythonPlatform": "Windows",
+  "venvPath": "backend",
+  "venv": "venv",
+  "executionEnvironments": [
+    {
+      "root": "backend",
+      "extraPaths": ["backend"],
+      "pythonVersion": "3.12"
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+Create a modern, professional, dark-theme Admin Dashboard UI design in Figma for a Final Year Project system called:
+
+“AI-Based Project Relevancy System”
+
+Design Style:
+- Clean modern SaaS dashboard
+- Dark theme with glassmorphism elements
+- Premium university management system look
+- Minimal but visually attractive
+- Responsive desktop-first layout
+- Smooth spacing and modern typography
+- Use blue/purple gradient accents
+- Add subtle shadows and hover effects
+- Professional UI like Notion + Linear + Vercel + Jira
+
+Main Goal:
+This admin panel manages Final Year Project submissions and AI relevancy analysis between student project ideas.
+
+---------------------------------------------------
+SIDEBAR NAVIGATION
+---------------------------------------------------
+
+Create a left sidebar with icons and labels:
+
+- Dashboard
+- Users
+- Students
+- Professors
+- Departments
+- Project Ideas
+- AI Relevancy Reports
+- Approvals
+- Notifications
+- Analytics
+- Settings
+- Logout
+
+Sidebar should:
+- Be collapsible
+- Have active page highlight
+- Include modern icons
+- Include system logo at top
+
+---------------------------------------------------
+TOP NAVBAR
+---------------------------------------------------
+
+Top navbar should contain:
+- Search bar
+- Notification bell with unread count
+- Admin profile avatar
+- Dark/light mode toggle
+- Breadcrumb navigation
+
+---------------------------------------------------
+DASHBOARD HOME PAGE
+---------------------------------------------------
+
+Design a visually impressive dashboard homepage with:
+
+1. Stats Cards
+- Total Students
+- Total Professors
+- Submitted Projects
+- Approved Projects
+- Rejected Projects
+- AI Duplicate Alerts
+
+Each card should:
+- Have modern icons
+- Trend percentage
+- Gradient accents
+- Hover animations
+
+2. Charts Section
+Add:
+- Project Submission Analytics
+- Department Wise Projects
+- AI Duplicate Detection Trends
+- Monthly Activity Graphs
+
+Use:
+- Line charts
+- Bar charts
+- Pie charts
+
+3. Recent Activities Panel
+Show:
+- New project submissions
+- Approval activities
+- Professor feedback
+- AI detection alerts
+
+4. AI Alert Section
+Show flagged duplicate projects with:
+- Similarity percentage
+- Student names
+- Risk level badges
+- “Review Now” buttons
+
+---------------------------------------------------
+USERS MANAGEMENT PAGE
+---------------------------------------------------
+
+Design tables for:
+- Students
+- Professors
+- Admins
+
+Features:
+- Search
+- Filters
+- Pagination
+- Status badges
+- Action buttons
+- View/Edit/Delete
+
+Include:
+- Add User modal
+- User profile drawer
+- Role assignment UI
+
+---------------------------------------------------
+PROJECT IDEAS PAGE
+---------------------------------------------------
+
+Create a professional table/grid UI for project submissions:
+
+Fields:
+- Project Title
+- Student Name
+- Department
+- Submission Date
+- Status
+- AI Relevancy Score
+
+Add:
+- View details page
+- Approve/reject actions
+- AI analysis button
+- Tags/categories
+
+---------------------------------------------------
+AI RELEVANCY ANALYSIS PAGE
+---------------------------------------------------
+
+This is the main premium feature.
+
+Design:
+- AI analysis dashboard
+- Similarity comparison cards
+- Duplicate risk indicators
+- Matched project list
+- Similarity percentage visualization
+- AI recommendations section
+- Heatmaps or graphs
+- Project comparison side-by-side layout
+
+Use futuristic AI-style visuals.
+
+---------------------------------------------------
+NOTIFICATIONS PAGE
+---------------------------------------------------
+
+Design:
+- Real-time notification center
+- Read/unread states
+- Activity timeline
+- AI alerts
+- Approval notifications
+
+---------------------------------------------------
+ANALYTICS PAGE
+---------------------------------------------------
+
+Add:
+- User growth charts
+- Submission trends
+- Approval rates
+- Department comparisons
+- AI detection accuracy metrics
+
+---------------------------------------------------
+SETTINGS PAGE
+---------------------------------------------------
+
+Include:
+- System settings
+- User permissions
+- Theme customization
+- Security settings
+- API integrations
+
+---------------------------------------------------
+UI REQUIREMENTS
+---------------------------------------------------
+
+- Use Auto Layout
+- Create reusable components
+- Design reusable cards/tables/buttons/modals
+- Use design system tokens
+- Include spacing consistency
+- Use modern font like Inter
+- Rounded corners
+- Professional hover states
+- Clean data tables
+- Beautiful empty states
+- Mobile responsive frames
+
+---------------------------------------------------
+DELIVERABLES
+---------------------------------------------------
+
+Generate:
+- Full high-fidelity Figma design
+- Desktop responsive screens
+- Reusable components
+- Design system
+- Interactive prototype
+- Modern admin dashboard experience
+
+The design should look like a real premium SaaS product built for universities and AI-based project management.

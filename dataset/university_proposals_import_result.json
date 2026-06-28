@@ -1,0 +1,89 @@
+{
+  "total_found": 13,
+  "ready_candidates": 10,
+  "skipped_not_ready": [
+    "Proposal.pdf",
+    "pixelwave (hrm) project proposal by group 2_260621_125121.pdf",
+    "FYP Proposal.pdf"
+  ],
+  "proposals_built": 10,
+  "imported": 0,
+  "skipped_duplicate": 0,
+  "failed": 0,
+  "dry_run": true,
+  "pre_count": null,
+  "post_count": null,
+  "inserted": [],
+  "results": [
+    {
+      "filename": "AI_Classroom_Noise_Notes_Proposal.pdf",
+      "status": "dry_run",
+      "title": "AI-Powered Real-Time Classroom Noise Detection and Automatic Lecture Notes Generator",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "FYP Pre.docx",
+      "status": "dry_run",
+      "title": "Smart Relocation Assistance and Property Finder System",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "FYP Proposal.docx",
+      "status": "dry_run",
+      "title": "AI-Based Retinal Disease Detection System Using Deep Learning",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "FYP_C-PRMS 2.pdf",
+      "status": "dry_run",
+      "title": "Integrated Health Information System (IHIS)",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "FYP_Proposal_1.docx",
+      "status": "dry_run",
+      "title": "AI-Based \"Can I Resell This?\" System for Waste-to-Value Optimization",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "Filled_FYP_Proposal_AI_Tuition_System.docx",
+      "status": "dry_run",
+      "title": "AI Smart Tuition Recommendation System",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "Final year project.pdf",
+      "status": "dry_run",
+      "title": "ScholarIQ \u2014 AI Scholarship Recommendation Platform",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "Proposal CareerCraft V2.pdf",
+      "status": "dry_run",
+      "title": "CareerCraft AI \u2014 Intelligent Interview and Resume Mastery Platform",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "ahad CipherPlay_Proposal.pdf",
+      "status": "dry_run",
+      "title": "CipherPlay \u2014 AI-Powered Children's Indoor Fitness Game",
+      "project_id": null,
+      "reason": ""
+    },
+    {
+      "filename": "qaiser11 fyp perposol.pdf",
+      "status": "dry_run",
+      "title": "AI-Powered Career Coaching and Job Preparation Platform",
+      "project_id": null,
+      "reason": ""
+    }
+  ]
+}

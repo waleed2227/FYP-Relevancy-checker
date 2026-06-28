@@ -1,0 +1,12 @@
+{
+  "include": ["app", "tests", "scripts", "alembic"],
+  "exclude": ["**/__pycache__", ".pytest_cache", "models"],
+  "extraPaths": ["."],
+  "pythonVersion": "3.12",
+  "pythonPlatform": "Windows",
+  "venvPath": ".",
+  "venv": "venv",
+  "typeCheckingMode": "basic",
+  "reportMissingImports": true,
+  "reportMissingModuleSource": false
+}

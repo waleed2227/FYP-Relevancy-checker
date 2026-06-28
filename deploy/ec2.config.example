@@ -1,0 +1,13 @@
+# Copy to deploy/ec2.config and fill in your EC2 public IP (ec2.config is gitignored)
+# Instance from AWS: i-0ace9e12d2adc035d (eu-north-1)
+
+EC2_HOST=YOUR_PUBLIC_IPV4
+EC2_USER=ubuntu
+EC2_REGION=eu-north-1
+EC2_INSTANCE_ID=i-0ace9e12d2adc035d
+
+# Path to SSH key (relative to repo root)
+EC2_KEY_PATH=fyp-relevancy-key.pem
+
+# Backend URL for Vercel VITE_API_URL (after uvicorn is running on EC2)
+VITE_API_URL=http://YOUR_PUBLIC_IPV4:8000/api/v1
