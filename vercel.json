@@ -4,5 +4,8 @@
   "buildCommand": "cd Frontend && npm run build",
   "outputDirectory": "Frontend/dist",
   "framework": "vite",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/api/v1/:path*", "destination": "http://51.21.244.45:8000/api/v1/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
