@@ -62,13 +62,37 @@ def _similarity_between_bow(text_a: str, text_b: str) -> float:
     return round(cosine_similarity(vecs[0], vecs[1]) * 100, 2)
 
 
+# all-MiniLM-L6-v2 truncates input at 256 word-pieces. Encoding a long proposal as
+# a single vector silently drops everything past that limit. We instead split the
+# text into word chunks, encode each, and mean-pool — so the whole proposal
+# contributes to the similarity, not just the first ~180 words.
+_SEMANTIC_CHUNK_WORDS = 180
+
+
+def _chunk_words(text: str, size: int = _SEMANTIC_CHUNK_WORDS) -> list[str]:
+    words = text.split()
+    if not words:
+        return [""]
+    return [" ".join(words[i : i + size]) for i in range(0, len(words), size)]
+
+
+def _semantic_vector(text: str) -> np.ndarray:
+    """Mean-pooled, L2-normalized sentence-transformer vector over word chunks."""
+    chunks = _chunk_words(text)
+    matrix = semantic_embeddings.encode_texts(chunks)
+    if matrix.shape[0] == 0:
+        raise RuntimeError("encode_texts returned no vectors")
+    pooled = matrix.mean(axis=0)
+    norm = np.linalg.norm(pooled)
+    return pooled / norm if norm > 0 else pooled
+
+
 def similarity_between(text_a: str, text_b: str) -> float:
     global _fallback_warned
     try:
-        matrix = semantic_embeddings.encode_texts([text_a, text_b])
-        if matrix.shape[0] < 2:
-            raise RuntimeError("encode_texts returned fewer than 2 vectors")
-        return round(cosine_similarity(matrix[0], matrix[1]) * 100, 2)
+        vec_a = _semantic_vector(text_a)
+        vec_b = _semantic_vector(text_b)
+        return round(cosine_similarity(vec_a, vec_b) * 100, 2)
     except Exception as exc:
         if not _fallback_warned:
             logger.warning(

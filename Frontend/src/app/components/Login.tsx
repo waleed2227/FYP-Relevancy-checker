@@ -7,9 +7,10 @@ import { useAuth } from '../context/AuthContext';
 interface LoginProps {
   onLogin: (role: 'student' | 'professor' | 'admin') => void;
   onRegister: () => void;
+  onForgotPassword: () => void;
 }
 
-export default function Login({ onLogin, onRegister }: LoginProps) {
+export default function Login({ onLogin, onRegister, onForgotPassword }: LoginProps) {
   const { login: setAuth } = useAuth();
   const [selectedRole, setSelectedRole] = useState<'student' | 'professor' | 'admin'>('student');
   const [email, setEmail] = useState('');
@@ -159,9 +160,13 @@ export default function Login({ onLogin, onRegister }: LoginProps) {
                       Remember me
                     </span>
                   </label>
-                  <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
+                  <button
+                    type="button"
+                    onClick={onForgotPassword}
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                  >
                     Forgot password?
-                  </a>
+                  </button>
                 </div>
 
                 {error && (

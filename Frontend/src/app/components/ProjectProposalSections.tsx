@@ -276,6 +276,7 @@ function TextAreaField({
   placeholder,
   rows = 3,
   required = false,
+  error,
 }: {
   name: string;
   label: string;
@@ -284,6 +285,7 @@ function TextAreaField({
   placeholder?: string;
   rows?: number;
   required?: boolean;
+  error?: string;
 }) {
   return (
     <div>
@@ -298,8 +300,11 @@ function TextAreaField({
         rows={rows}
         placeholder={placeholder}
         required={required}
-        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
+        className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none ${
+          error ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+        }`}
       />
+      {error && <p className="text-sm text-red-600 dark:text-red-400 mt-1">{error}</p>}
     </div>
   );
 }
@@ -311,6 +316,7 @@ interface ProposalFormFieldsProps {
   selectedAiTech: Set<string>;
   showSection1?: boolean;
   section1Fields?: React.ReactNode;
+  fieldErrors?: Record<string, string>;
 }
 
 export function ProposalFormFields({
@@ -320,32 +326,34 @@ export function ProposalFormFields({
   selectedAiTech,
   showSection1 = false,
   section1Fields,
+  fieldErrors = {},
 }: ProposalFormFieldsProps) {
+  const err = (key: string) => fieldErrors[key];
   return (
     <div className="space-y-6">
       {showSection1 && section1Fields}
 
       <FormSection title="Section 2: Problem Analysis">
-        <TextAreaField name="problemStatement" label="Problem Statement" value={values.problemStatement} onChange={onChange} placeholder="Clearly define the problem your FYP aims to solve..." />
+        <TextAreaField name="problemStatement" label="Problem Statement" value={values.problemStatement} onChange={onChange} placeholder="Clearly define the problem your FYP aims to solve..." required error={err('problemStatement')} />
         <TextAreaField name="currentChallenges" label="Current Challenges" value={values.currentChallenges} onChange={onChange} placeholder="Describe challenges faced in this domain today..." />
-        <TextAreaField name="existingSolutions" label="Existing Solutions" value={values.existingSolutions} onChange={onChange} placeholder="What solutions currently exist?" />
+        <TextAreaField name="existingSolutions" label="Existing Solutions" value={values.existingSolutions} onChange={onChange} placeholder="What solutions currently exist?" required error={err('existingSolutions')} />
         <TextAreaField name="existingSolutionLimitations" label="Limitations of Existing Solutions" value={values.existingSolutionLimitations} onChange={onChange} placeholder="What are the gaps or weaknesses in current solutions?" />
       </FormSection>
 
       <FormSection title="Section 3: Proposed Solution">
-        <TextAreaField name="proposedSolution" label="Proposed Solution" value={values.proposedSolution} onChange={onChange} placeholder="Describe your proposed approach and solution..." rows={4} />
-        <TextAreaField name="projectScope" label="Project Scope" value={values.projectScope} onChange={onChange} placeholder="Define boundaries, deliverables, and what is in/out of scope..." />
+        <TextAreaField name="proposedSolution" label="Proposed Solution" value={values.proposedSolution} onChange={onChange} placeholder="Describe your proposed approach and solution..." rows={4} required error={err('proposedSolution')} />
+        <TextAreaField name="projectScope" label="Project Scope" value={values.projectScope} onChange={onChange} placeholder="Define boundaries, deliverables, and what is in/out of scope..." required error={err('projectScope')} />
       </FormSection>
 
       <FormSection title="Section 4: Innovation & Uniqueness">
-        <TextAreaField name="uniqueFeatures" label="Unique Features" value={values.uniqueFeatures} onChange={onChange} placeholder="What unique features will your project offer?" />
-        <TextAreaField name="innovationAspect" label="Innovation Aspect" value={values.innovationAspect} onChange={onChange} placeholder="How is your project innovative?" />
+        <TextAreaField name="uniqueFeatures" label="Unique Features" value={values.uniqueFeatures} onChange={onChange} placeholder="What unique features will your project offer?" required error={err('uniqueFeatures')} />
+        <TextAreaField name="innovationAspect" label="Innovation Aspect" value={values.innovationAspect} onChange={onChange} placeholder="How is your project innovative?" required error={err('innovationAspect')} />
         <TextAreaField name="competitiveAdvantage" label="Competitive Advantage" value={values.competitiveAdvantage} onChange={onChange} placeholder="What advantage does your solution have over alternatives?" />
         <TextAreaField name="marketGap" label="Market Gap" value={values.marketGap} onChange={onChange} placeholder="What market or research gap does this address?" />
       </FormSection>
 
       <FormSection title="Section 5: Target Users">
-        <TextAreaField name="primaryTargetUsers" label="Primary Target Users" value={values.primaryTargetUsers} onChange={onChange} placeholder="Who are the main beneficiaries of your project?" />
+        <TextAreaField name="primaryTargetUsers" label="Primary Target Users" value={values.primaryTargetUsers} onChange={onChange} placeholder="Who are the main beneficiaries of your project?" required error={err('primaryTargetUsers')} />
         <TextAreaField name="secondaryTargetUsers" label="Secondary Target Users" value={values.secondaryTargetUsers} onChange={onChange} placeholder="Any secondary user groups?" />
       </FormSection>
 
@@ -376,8 +384,8 @@ export function ProposalFormFields({
       </FormSection>
 
       <FormSection title="Section 8: Expected Impact">
-        <TextAreaField name="expectedImpact" label="Expected Impact" value={values.expectedImpact} onChange={onChange} placeholder="Overall expected impact of your project..." />
-        <TextAreaField name="academicImpact" label="Academic Impact" value={values.academicImpact} onChange={onChange} placeholder="Contribution to academic knowledge or learning outcomes..." />
+        <TextAreaField name="expectedImpact" label="Expected Impact" value={values.expectedImpact} onChange={onChange} placeholder="Overall expected impact of your project..." required error={err('expectedImpact')} />
+        <TextAreaField name="academicImpact" label="Academic Impact (Objectives)" value={values.academicImpact} onChange={onChange} placeholder="Contribution to academic knowledge or learning outcomes..." required error={err('academicImpact')} />
         <TextAreaField name="businessImpact" label="Business Impact" value={values.businessImpact} onChange={onChange} placeholder="Potential business or commercial value..." />
         <TextAreaField name="socialImpact" label="Social Impact" value={values.socialImpact} onChange={onChange} placeholder="Benefits to society or community..." />
       </FormSection>

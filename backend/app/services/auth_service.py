@@ -5,12 +5,22 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy.orm.base import NO_VALUE
 
-from app.auth.security import hash_password, verify_password, create_access_token, create_refresh_token
+from app.auth.security import (
+    create_access_token,
+    create_password_reset_token,
+    create_refresh_token,
+    hash_password,
+    password_fingerprint,
+    verify_password,
+    verify_password_reset_token,
+)
+from app.config.settings import get_settings
 from app.models.department import Department
 from app.models.professor import Professor
 from app.models.student import Student
 from app.models.user import User, UserRole
 from app.schemas.auth import RegisterRequest, UserResponse
+from app.services.email_service import send_password_reset_email
 from app.utils.exceptions import bad_request, conflict, unauthorized
 
 
@@ -121,6 +131,49 @@ async def authenticate_user(
     access = create_access_token(user.id, {"role": user.role.value})
     refresh = create_refresh_token(user.id)
     return user, access, refresh
+
+
+async def request_password_reset(db: AsyncSession, email: str) -> None:
+    """Send a password-reset email if the account exists.
+
+    Intentionally silent about whether the email exists (no account enumeration):
+    the route always returns the same generic message.
+    """
+    user = await get_user_by_email(db, email)
+    if not user or not user.is_active:
+        return
+
+    token = create_password_reset_token(user.id, user.hashed_password)
+    settings = get_settings()
+    reset_link = f"{settings.frontend_base_url.rstrip('/')}/?reset_token={token}"
+
+    try:
+        await send_password_reset_email(user.email, user.full_name, reset_link)
+    except Exception:
+        # Never expose SMTP errors to the caller; log happens inside email_service.
+        pass
+
+
+async def reset_password(db: AsyncSession, token: str, new_password: str) -> None:
+    """Validate a reset token and set a new password (token becomes single-use)."""
+    payload = verify_password_reset_token(token)
+    if not payload or "sub" not in payload:
+        raise bad_request("This reset link is invalid or has expired. Please request a new one.")
+
+    try:
+        user_id = int(payload["sub"])
+    except (TypeError, ValueError):
+        raise bad_request("This reset link is invalid or has expired. Please request a new one.")
+
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if not user or not user.is_active:
+        raise bad_request("This reset link is invalid or has expired. Please request a new one.")
+
+    if payload.get("fp") != password_fingerprint(user.hashed_password):
+        raise bad_request("This reset link has already been used. Please request a new one.")
+
+    user.hashed_password = hash_password(new_password)
 
 
 def user_to_response(user: User) -> UserResponse:

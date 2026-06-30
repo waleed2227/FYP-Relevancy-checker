@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import { FileText, Search, Calendar, TrendingUp, Loader2, AlertCircle, CheckCircle, Eye, Edit2, X } from 'lucide-react';
 import { api, parseApiErrorDetail, ApiError } from '../services/api';
+import { validateProposalForm } from '../utils/proposalValidation';
 import ProjectProposalSections, {
   ProposalFormFields,
   PROPOSAL_FORM_DEFAULTS,
@@ -47,6 +48,7 @@ export default function MyProjects({ onLogout, onNavigate }: MyProjectsProps) {
   });
   const [saving, setSaving] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const [editFieldErrors, setEditFieldErrors] = useState<Record<string, string>>({});
   const [editAiTech, setEditAiTech] = useState<Set<string>>(new Set());
 
   const loadProjects = async () => {
@@ -104,10 +106,20 @@ export default function MyProjects({ onLogout, onNavigate }: MyProjectsProps) {
     });
     setEditAiTech(parseAiTechnologies(fields.aiTechnologiesUsed));
     setEditError(null);
+    setEditFieldErrors({});
   };
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setEditForm({ ...editForm, [name]: value });
+    if (editFieldErrors[name]) {
+      setEditFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
+    if (editError) setEditError(null);
   };
 
   const handleEditAiTechToggle = (tech: string) => {
@@ -123,6 +135,17 @@ export default function MyProjects({ onLogout, onNavigate }: MyProjectsProps) {
   const handleSaveEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editProject) return;
+
+    const errors = validateProposalForm({
+      ...editForm,
+      aiTechnologiesUsed: serializeAiTechnologies(editAiTech),
+    });
+    setEditFieldErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      setEditError('Please fix the highlighted fields before saving.');
+      return;
+    }
+
     setSaving(true);
     setEditError(null);
     try {
@@ -298,25 +321,69 @@ export default function MyProjects({ onLogout, onNavigate }: MyProjectsProps) {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <form onSubmit={handleSaveEdit} className="p-6 space-y-4">
+            <form onSubmit={handleSaveEdit} className="p-6 space-y-4" noValidate>
               {editError && (
-                <div className="p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg">{editError}</div>
+                <div className="p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg dark:bg-red-900/20 dark:text-red-300 dark:border-red-800">
+                  {editError}
+                </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
-                <input name="title" value={editForm.title} onChange={handleEditChange} required className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white" />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title *</label>
+                <input
+                  name="title"
+                  value={editForm.title}
+                  onChange={handleEditChange}
+                  className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+                    editFieldErrors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  }`}
+                />
+                {editFieldErrors.title && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">{editFieldErrors.title}</p>
+                )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Technologies</label>
-                <input name="technologies" value={editForm.technologies} onChange={handleEditChange} required className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white" />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Technologies *</label>
+                <input
+                  name="technologies"
+                  value={editForm.technologies}
+                  onChange={handleEditChange}
+                  className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+                    editFieldErrors.technologies ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  }`}
+                />
+                {editFieldErrors.technologies && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">{editFieldErrors.technologies}</p>
+                )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Professor Email</label>
-                <input name="professorEmail" type="email" value={editForm.professorEmail} onChange={handleEditChange} required className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white" />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Professor Email *</label>
+                <input
+                  name="professorEmail"
+                  type="email"
+                  value={editForm.professorEmail}
+                  onChange={handleEditChange}
+                  className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+                    editFieldErrors.professorEmail ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  }`}
+                />
+                {editFieldErrors.professorEmail && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">{editFieldErrors.professorEmail}</p>
+                )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
-                <textarea name="description" value={editForm.description} onChange={handleEditChange} required rows={5} className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-none" />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description *</label>
+                <textarea
+                  name="description"
+                  value={editForm.description}
+                  onChange={handleEditChange}
+                  rows={5}
+                  className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-none ${
+                    editFieldErrors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  }`}
+                />
+                {editFieldErrors.description && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">{editFieldErrors.description}</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
@@ -335,21 +402,27 @@ export default function MyProjects({ onLogout, onNavigate }: MyProjectsProps) {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Industry</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Industry *</label>
                 <input
                   name="targetIndustry"
                   type="text"
                   value={editForm.targetIndustry}
                   onChange={handleEditChange}
                   placeholder="e.g., Healthcare, Education, Finance"
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+                    editFieldErrors.targetIndustry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  }`}
                 />
+                {editFieldErrors.targetIndustry && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">{editFieldErrors.targetIndustry}</p>
+                )}
               </div>
               <ProposalFormFields
                 values={editForm}
                 onChange={handleEditChange}
                 onAiTechToggle={handleEditAiTechToggle}
                 selectedAiTech={editAiTech}
+                fieldErrors={editFieldErrors}
               />
               <div className="flex gap-3 pt-4">
                 <button type="button" onClick={() => setEditProject(null)} className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg">

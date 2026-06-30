@@ -38,7 +38,7 @@ if (-not (Test-Path $keyPath)) {
     exit 1
 }
 
-icacls $keyPath /inheritance:r /grant:r "${env:USERNAME}:(R)" 2>$null | Out-Null
+& (Join-Path $PSScriptRoot "fix-key-permissions.ps1")
 
 Write-Host "Connecting to ${user}@${host_} ..." -ForegroundColor Cyan
 ssh -i $keyPath "${user}@${host_}"

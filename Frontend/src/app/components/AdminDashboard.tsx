@@ -26,6 +26,7 @@ import {
   type DuplicateAlertItem,
 } from '../services/adminService';
 import { ApiError, parseApiErrorDetail } from '../services/api';
+import ProjectSearchPanel from './ProjectSearchPanel';
 
 interface AdminDashboardProps {
   onLogout: () => void;
@@ -321,6 +322,8 @@ export default function AdminDashboard({ onLogout, onNavigate }: AdminDashboardP
               );
             })}
           </div>
+
+          <ProjectSearchPanel className="mb-8" />
 
           {/* AI Duplicate Detection Alerts — live data from duplicate_reports + matched_projects */}
           <div

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
-import { CheckCircle, AlertTriangle, ArrowLeft, TrendingUp, FileText, Loader2, AlertCircle } from 'lucide-react';
+import { CheckCircle, AlertTriangle, ArrowLeft, TrendingUp, Loader2, AlertCircle } from 'lucide-react';
 import { api, ApiError, parseApiErrorDetail } from '../services/api';
 import RelevancyExplanationPanel, { type RelevancyExplanationData } from './RelevancyExplanationPanel';
+import MostSimilarProjectsPanel, { type MatchedProjectCard } from './MostSimilarProjectsPanel';
 
 interface RelevancyResultsProps {
   idea: any;
@@ -14,7 +15,7 @@ export default function RelevancyResults({ idea, onBackToDashboard, onLogout }: 
   const [relevancyScore, setRelevancyScore] = useState<number | null>(
     idea.relevancyScore != null ? Math.round(idea.relevancyScore) : null
   );
-  const [matchedProjects, setMatchedProjects] = useState<any[]>([]);
+  const [matchedProjects, setMatchedProjects] = useState<MatchedProjectCard[]>([]);
   const [insights, setInsights] = useState<
     { label: string; value: string; description: string }[]
   >([
@@ -42,29 +43,13 @@ export default function RelevancyResults({ idea, onBackToDashboard, onLogout }: 
           overall_score: number;
           insights: { label: string; value: string; description: string }[];
           explanation?: RelevancyExplanationData | null;
-          matched_projects: {
-            id: number;
-            title: string;
-            similarity: number;
-            year?: string;
-            status?: string;
-            author?: string;
-          }[];
+          matched_projects: MatchedProjectCard[];
         }>(`/projects/${idea.id}/relevancy`);
         setRelevancyScore(Math.round(data.overall_score));
         setInsights(data.insights);
         setExplanation(data.explanation ?? null);
         setSimilarityScore(data.explanation?.similarity_score ?? null);
-        setMatchedProjects(
-          data.matched_projects.map((p) => ({
-            id: p.id,
-            title: p.title,
-            similarity: p.similarity,
-            year: p.year || '—',
-            status: p.status || '—',
-            author: p.author || 'Unknown',
-          }))
-        );
+        setMatchedProjects(data.matched_projects ?? []);
       } catch (err) {
         const message =
           err instanceof ApiError
@@ -167,6 +152,8 @@ export default function RelevancyResults({ idea, onBackToDashboard, onLogout }: 
             </div>
           </div>
 
+          <MostSimilarProjectsPanel projects={matchedProjects} className="mb-8" />
+
           <RelevancyExplanationPanel
             explanation={explanation}
             similarityScore={similarityScore}
@@ -235,74 +222,6 @@ export default function RelevancyResults({ idea, onBackToDashboard, onLogout }: 
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center gap-3">
-                <FileText className="w-5 h-5 text-gray-600" />
-                <h3 className="text-gray-900">Similar Existing Projects</h3>
-              </div>
-              <p className="text-sm text-gray-600 mt-1">
-                Projects in our database with similar characteristics
-              </p>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-200">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">
-                      Project Title
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">
-                      Similarity
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">
-                      Year
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">
-                      Author
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {matchedProjects.length === 0 ? (
-                    <tr>
-                      <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                        No similar projects found in the database.
-                      </td>
-                    </tr>
-                  ) : (
-                    matchedProjects.map((project) => (
-                      <tr key={project.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-gray-900">{project.title}</td>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-2">
-                            <div className="w-full max-w-[100px] bg-gray-200 rounded-full h-2">
-                              <div
-                                className="bg-blue-600 h-2 rounded-full"
-                                style={{ width: `${project.similarity}%` }}
-                              />
-                            </div>
-                            <span className="text-gray-900 text-sm">{project.similarity}%</span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 text-gray-700">{project.year}</td>
-                        <td className="px-6 py-4 text-gray-700">{project.author}</td>
-                        <td className="px-6 py-4">
-                          <span className="inline-flex px-3 py-1 rounded-full text-xs bg-green-100 text-green-800">
-                            {project.status}
-                          </span>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
             </div>
           </div>
 

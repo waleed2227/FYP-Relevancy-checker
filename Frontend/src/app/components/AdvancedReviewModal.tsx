@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import ProjectProposalSections from './ProjectProposalSections';
+import MostSimilarProjectsPanel, { type MatchedProjectCard } from './MostSimilarProjectsPanel';
 import RelevancyExplanationPanel, { type RelevancyExplanationData } from './RelevancyExplanationPanel';
 import { api } from '../services/api';
 
@@ -42,29 +43,43 @@ export default function AdvancedReviewModal({
   const [explanationSimilarity, setExplanationSimilarity] = useState<number | null>(
     project.similarityScore ?? null
   );
+  const [matchedProjects, setMatchedProjects] = useState<MatchedProjectCard[]>([]);
+  const [relevancyLoading, setRelevancyLoading] = useState(false);
 
   const aiFeedbackSuggestions = explanation?.novelty_suggestions ?? [];
 
   useEffect(() => {
-    if (project.aiExplanation) {
-      setExplanation(project.aiExplanation);
-      setExplanationSimilarity(project.similarityScore ?? project.aiExplanation.similarity_score ?? null);
-      return;
-    }
-
-    const load = async () => {
+    const loadRelevancy = async () => {
+      setRelevancyLoading(true);
       try {
         const data = await api.get<{
           explanation?: RelevancyExplanationData | null;
+          matched_projects?: MatchedProjectCard[];
         }>(`/projects/${project.id}/relevancy`);
-        setExplanation(data.explanation ?? null);
-        setExplanationSimilarity(data.explanation?.similarity_score ?? project.similarityScore ?? null);
+
+        if (!project.aiExplanation) {
+          setExplanation(data.explanation ?? null);
+        }
+        setExplanationSimilarity(
+          data.explanation?.similarity_score ?? project.similarityScore ?? null
+        );
+        setMatchedProjects(data.matched_projects ?? []);
       } catch {
-        setExplanation(null);
+        if (!project.aiExplanation) {
+          setExplanation(null);
+        }
+        setMatchedProjects([]);
+      } finally {
+        setRelevancyLoading(false);
       }
     };
 
-    load();
+    if (project.aiExplanation) {
+      setExplanation(project.aiExplanation);
+      setExplanationSimilarity(project.similarityScore ?? project.aiExplanation.similarity_score ?? null);
+    }
+
+    loadRelevancy();
   }, [project.id, project.aiExplanation, project.similarityScore]);
 
   const getScoreColor = (score: number) => {
@@ -271,6 +286,16 @@ export default function AdvancedReviewModal({
                 </div>
               </div>
             </div>
+
+            <MostSimilarProjectsPanel
+              projects={matchedProjects}
+              variant="professor"
+              className="mb-4 !rounded-lg !border-purple-200 dark:!border-purple-800"
+            />
+
+            {relevancyLoading && matchedProjects.length === 0 && (
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Loading similar project matches...</p>
+            )}
 
             <RelevancyExplanationPanel
               explanation={explanation}

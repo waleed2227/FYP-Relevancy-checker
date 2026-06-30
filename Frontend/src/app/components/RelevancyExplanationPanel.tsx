@@ -58,7 +58,7 @@ export default function RelevancyExplanationPanel({
       <div className="space-y-4">
         <Section icon={Target} title="Why Similar / Relevant" text={explanation.why_relevant} />
         {explanation.similar_projects_summary && (
-          <Section icon={Layers} title="Most Similar Projects" text={explanation.similar_projects_summary} />
+          <Section icon={Layers} title="AI Similarity Summary" text={explanation.similar_projects_summary} />
         )}
         {explanation.objectives_overlap && (
           <Section icon={ListChecks} title="Objectives Overlap" text={explanation.objectives_overlap} />

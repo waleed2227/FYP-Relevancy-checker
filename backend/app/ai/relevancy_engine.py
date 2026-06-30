@@ -55,7 +55,11 @@ def _field_text(project: dict, field: str) -> str | None:
 
 
 def build_combined_analysis_text(project: dict) -> str:
-    """Join weighted proposal fields: critical×3, high×2, standard×1."""
+    """Join weighted proposal fields: critical×3, high×2, standard×1.
+
+    Used by the bag-of-words fallback path, where token repetition acts as a
+    weighting signal. The semantic path uses build_semantic_text() instead.
+    """
     parts: list[str] = []
     for weight, fields in (
         (3, CRITICAL_FIELDS),
@@ -71,6 +75,43 @@ def build_combined_analysis_text(project: dict) -> str:
             tier_text = " ".join(tier_chunks)
             parts.extend([tier_text] * weight)
     return " ".join(parts)
+
+
+# Order for the semantic representation: domain-distinguishing fields FIRST so they
+# always reach the transformer (and dominate short proposals), followed by the
+# substantive proposal content. Each field appears ONCE — repeating text is a
+# bag-of-words trick that only wastes the transformer's token budget and inflates
+# similarity between structurally-similar but topically-different proposals.
+SEMANTIC_FIELD_ORDER: tuple[str, ...] = (
+    "category",
+    "target_industry",
+    "title",
+    "target_users",
+    "problem_statement",
+    "proposed_solution",
+    "unique_features",
+    "innovation_aspect",
+    "project_scope",
+    "current_challenges",
+    "existing_solutions",
+    "existing_solution_limitations",
+    "competitive_advantage",
+    "market_gap",
+    "expected_impact",
+    "technologies",
+    "ai_technologies_used",
+    "description",
+)
+
+
+def build_semantic_text(project: dict) -> str:
+    """Clean, de-duplicated, domain-first text for sentence-transformer encoding."""
+    parts: list[str] = []
+    for field in SEMANTIC_FIELD_ORDER:
+        text = _field_text(project, field)
+        if text:
+            parts.append(text)
+    return ". ".join(parts)
 
 
 @dataclass
@@ -109,6 +150,33 @@ class RelevancyEngine:
         word_count = len(scope_text.split()) if scope_text else 0
         return min(100, 40 + word_count * 0.5)
 
+    # Fields that meaningfully describe a proposal — used to measure how complete the
+    # submission is (and therefore how much the AI has to work with).
+    COMPLETENESS_FIELDS: tuple[str, ...] = RELEVANCY_TEXT_FIELDS + (
+        "category",
+        "ai_technologies_used",
+    )
+
+    def _proposal_completeness(self, project: dict) -> float:
+        """Fraction of meaningful proposal fields that are actually filled in (0..1)."""
+        total = len(self.COMPLETENESS_FIELDS)
+        if total == 0:
+            return 0.0
+        filled = sum(1 for f in self.COMPLETENESS_FIELDS if _field_text(project, f))
+        return filled / total
+
+    def _confidence_score(self, project: dict, corpus_size: int) -> float:
+        """Grounded analysis confidence.
+
+        Reflects how much evidence the analysis is based on, not a fixed number:
+          - proposal completeness: a fuller proposal gives the model more to reason about
+          - corpus adequacy: more approved reference projects = a more reliable comparison
+        """
+        completeness = self._proposal_completeness(project)
+        corpus_adequacy = min(1.0, corpus_size / 20.0)
+        raw = 100.0 * (0.65 * completeness + 0.35 * corpus_adequacy)
+        return round(min(98.0, max(40.0, raw)), 2)
+
     def _market_input_score(self, project: dict, tech_score: float) -> float:
         market_parts = [
             _field_text(project, "target_industry"),
@@ -123,14 +191,14 @@ class RelevancyEngine:
         return max(tech_score, market_score)
 
     def analyze(self, project: dict, existing_projects: list[dict]) -> AnalysisResult:
-        query_text = build_combined_analysis_text(project)
+        query_text = build_semantic_text(project)
         match_threshold = get_settings().duplicate_similarity_threshold
 
         matched: list[dict] = []
         max_similarity = 0.0
 
         for proj in existing_projects:
-            corpus_text = build_combined_analysis_text(proj)
+            corpus_text = build_semantic_text(proj)
             sim = similarity_between(query_text, corpus_text)
             if sim >= match_threshold:
                 matched.append({
@@ -165,7 +233,7 @@ class RelevancyEngine:
             + (100 - similarity_score) * 0.15,
             2,
         )
-        ai_confidence = round(min(95, 70 + len(matched) * 5), 2)
+        ai_confidence = self._confidence_score(project, len(existing_projects))
 
         if overall >= 80:
             summary = "Strong relevancy with good innovative potential."

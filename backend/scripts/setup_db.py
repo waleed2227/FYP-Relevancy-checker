@@ -12,7 +12,10 @@ _scripts = Path(__file__).resolve().parent
 def run(script_name: str) -> None:
     path = _scripts / script_name
     print(f"\n>>> python {path.name}\n")
-    r = subprocess.run([sys.executable, str(path)], cwd=ROOT)
+    import os
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(ROOT)
+    r = subprocess.run([sys.executable, str(path)], cwd=ROOT, env=env)
     if r.returncode != 0:
         sys.exit(r.returncode)
 
@@ -22,7 +25,10 @@ def main() -> None:
     run("create_database.py")
     run("init_schema.py")
     print("\n>>> python -m scripts.seed\n")
-    subprocess.run([sys.executable, "-m", "scripts.seed"], cwd=ROOT, check=True)
+    import os
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(ROOT)
+    subprocess.run([sys.executable, "-m", "scripts.seed"], cwd=ROOT, env=env, check=True)
     print("\nSetup complete.")
 
 

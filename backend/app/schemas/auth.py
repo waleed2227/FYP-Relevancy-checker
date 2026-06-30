@@ -73,6 +73,24 @@ class LoginRequest(BaseModel):
         return v.strip().lower()
 
 
+class ForgotPasswordRequest(BaseModel):
+    email: str = Field(..., description="Email address of the account to reset")
+
+    @field_validator("email")
+    @classmethod
+    def normalize_email(cls, v: str) -> str:
+        return v.strip().lower()
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str = Field(..., min_length=10, description="Token from the password-reset email")
+    new_password: str = Field(..., min_length=8, max_length=128, description="Min 8 characters")
+
+
+class MessageResponse(BaseModel):
+    message: str
+
+
 class TokenResponse(BaseModel):
     access_token: str
     refresh_token: str

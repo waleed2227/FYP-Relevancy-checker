@@ -6,7 +6,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.auth.dependencies import CurrentUser
 from app.auth.security import create_access_token, create_refresh_token, verify_token
 from app.database import get_db
-from app.schemas.auth import LoginRequest, RefreshRequest, RegisterRequest, TokenResponse, UserResponse
+from app.schemas.auth import (
+    ForgotPasswordRequest,
+    LoginRequest,
+    MessageResponse,
+    RefreshRequest,
+    RegisterRequest,
+    ResetPasswordRequest,
+    TokenResponse,
+    UserResponse,
+)
 from app.services import auth_service
 from app.utils.exceptions import bad_request
 
@@ -37,6 +46,31 @@ async def login(data: LoginRequest, db: AsyncSession = Depends(get_db)):
         db, data.email, data.password, data.role
     )
     return TokenResponse(access_token=access, refresh_token=refresh)
+
+
+@router.post(
+    "/forgot-password",
+    response_model=MessageResponse,
+    summary="Request a password-reset email",
+)
+async def forgot_password(data: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)):
+    """Always returns the same message regardless of whether the email exists."""
+    await auth_service.request_password_reset(db, data.email)
+    return MessageResponse(
+        message="If an account exists for that email, a password reset link has been sent."
+    )
+
+
+@router.post(
+    "/reset-password",
+    response_model=MessageResponse,
+    summary="Set a new password using an emailed reset token",
+)
+async def reset_password(data: ResetPasswordRequest, db: AsyncSession = Depends(get_db)):
+    await auth_service.reset_password(db, data.token, data.new_password)
+    return MessageResponse(
+        message="Your password has been updated. You can now sign in with your new password."
+    )
 
 
 @router.post("/refresh", response_model=TokenResponse, summary="Refresh access token")

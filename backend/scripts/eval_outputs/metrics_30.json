@@ -1,0 +1,378 @@
+{
+  "thresholds": {
+    "low_max": 50.0,
+    "high_min": 68.0,
+    "duplicate_min": 68.0
+  },
+  "engine": {
+    "accuracy": 0.9,
+    "macro_f1": 0.9153439153439153,
+    "confusion_matrix": [
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        3,
+        9,
+        0
+      ],
+      [
+        0,
+        0,
+        6
+      ]
+    ],
+    "per_class": {
+      "UNRELATED": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "support": 12
+      },
+      "RELATED": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "support": 12
+      },
+      "NEAR_DUPLICATE": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 6
+      }
+    },
+    "binary_duplicate": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 24,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    }
+  },
+  "opus": {
+    "accuracy": 0.9666666666666667,
+    "macro_f1": 0.9721739130434783,
+    "confusion_matrix": [
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        1,
+        11,
+        0
+      ],
+      [
+        0,
+        0,
+        6
+      ]
+    ]
+  },
+  "engine_vs_opus": {
+    "agreement": 0.9333333333333333,
+    "kappa": 0.8947368421052632
+  },
+  "class_stats": {
+    "UNRELATED": {
+      "n": 12,
+      "mean": 25.319999999999997,
+      "min": 10.37,
+      "max": 37.2
+    },
+    "RELATED": {
+      "n": 12,
+      "mean": 53.17916666666667,
+      "min": 18.76,
+      "max": 64.8
+    },
+    "NEAR_DUPLICATE": {
+      "n": 6,
+      "mean": 89.49666666666667,
+      "min": 83.47,
+      "max": 92.95
+    }
+  },
+  "classes": [
+    "UNRELATED",
+    "RELATED",
+    "NEAR_DUPLICATE"
+  ],
+  "results": [
+    {
+      "n": 1,
+      "a": "Emergency Room Patient Flow Optimization",
+      "b": "Hospital Emergency Department Congestion Predictor",
+      "truth": "NEAR_DUPLICATE",
+      "sim": 83.47,
+      "engine": "NEAR_DUPLICATE",
+      "opus": "NEAR_DUPLICATE"
+    },
+    {
+      "n": 2,
+      "a": "Crop Disease Detection from Leaf Images",
+      "b": "Plant Leaf Disease Detection using Deep Learning",
+      "truth": "NEAR_DUPLICATE",
+      "sim": 87.05,
+      "engine": "NEAR_DUPLICATE",
+      "opus": "NEAR_DUPLICATE"
+    },
+    {
+      "n": 3,
+      "a": "E-commerce Product Recommendation Engine",
+      "b": "Online Shopping Personalized Recommendation System",
+      "truth": "NEAR_DUPLICATE",
+      "sim": 92.95,
+      "engine": "NEAR_DUPLICATE",
+      "opus": "NEAR_DUPLICATE"
+    },
+    {
+      "n": 4,
+      "a": "Academic Plagiarism Detection System",
+      "b": "Semantic Plagiarism Checker for Student Essays",
+      "truth": "NEAR_DUPLICATE",
+      "sim": 91.02,
+      "engine": "NEAR_DUPLICATE",
+      "opus": "NEAR_DUPLICATE"
+    },
+    {
+      "n": 5,
+      "a": "Banking Fraud Detection System",
+      "b": "Real-Time Credit Card Fraud Detector",
+      "truth": "NEAR_DUPLICATE",
+      "sim": 90.19,
+      "engine": "NEAR_DUPLICATE",
+      "opus": "NEAR_DUPLICATE"
+    },
+    {
+      "n": 6,
+      "a": "Adaptive Traffic Signal Optimization",
+      "b": "Reinforcement-Learning Traffic Light Controller",
+      "truth": "NEAR_DUPLICATE",
+      "sim": 92.3,
+      "engine": "NEAR_DUPLICATE",
+      "opus": "NEAR_DUPLICATE"
+    },
+    {
+      "n": 7,
+      "a": "Emergency Room Patient Flow Optimization",
+      "b": "Hospital Appointment Booking Chatbot",
+      "truth": "RELATED",
+      "sim": 59.82,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 8,
+      "a": "AI Disaster Impact Prediction System",
+      "b": "Disaster Response Coordination Platform",
+      "truth": "RELATED",
+      "sim": 56.71,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 9,
+      "a": "Crop Disease Detection from Leaf Images",
+      "b": "Smart Precision Irrigation System",
+      "truth": "RELATED",
+      "sim": 55.81,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 10,
+      "a": "Language Learning Mobile App",
+      "b": "Academic Plagiarism Detection System",
+      "truth": "RELATED",
+      "sim": 18.76,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 11,
+      "a": "Banking Fraud Detection System",
+      "b": "AI Stock Portfolio Advisor",
+      "truth": "RELATED",
+      "sim": 53.69,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 12,
+      "a": "Smart Parking Availability System",
+      "b": "Adaptive Traffic Signal Optimization",
+      "truth": "RELATED",
+      "sim": 45.5,
+      "engine": "UNRELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 13,
+      "a": "E-commerce Product Recommendation Engine",
+      "b": "Retail Demand Forecasting & Inventory Optimizer",
+      "truth": "RELATED",
+      "sim": 64.8,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 14,
+      "a": "Music Streaming Recommendation App",
+      "b": "Movie Recommendation Streaming Platform",
+      "truth": "RELATED",
+      "sim": 63.88,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 15,
+      "a": "AI Stock Portfolio Advisor",
+      "b": "Loan Default Risk Prediction System",
+      "truth": "RELATED",
+      "sim": 58.42,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 16,
+      "a": "Adaptive Traffic Signal Optimization",
+      "b": "Urban Air Quality Monitoring Network",
+      "truth": "RELATED",
+      "sim": 44.86,
+      "engine": "UNRELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 17,
+      "a": "Academic Plagiarism Detection System",
+      "b": "Automated Short-Answer Essay Grading System",
+      "truth": "RELATED",
+      "sim": 57.88,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 18,
+      "a": "Crop Disease Detection from Leaf Images",
+      "b": "Crop Yield Prediction from Weather & Soil Data",
+      "truth": "RELATED",
+      "sim": 58.02,
+      "engine": "RELATED",
+      "opus": "RELATED"
+    },
+    {
+      "n": 19,
+      "a": "Emergency Room Patient Flow Optimization",
+      "b": "Music Streaming Recommendation App",
+      "truth": "UNRELATED",
+      "sim": 20.16,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 20,
+      "a": "Crop Disease Detection from Leaf Images",
+      "b": "Banking Fraud Detection System",
+      "truth": "UNRELATED",
+      "sim": 26.35,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 21,
+      "a": "Language Learning Mobile App",
+      "b": "Smart Parking Availability System",
+      "truth": "UNRELATED",
+      "sim": 24.84,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 22,
+      "a": "AI Disaster Impact Prediction System",
+      "b": "E-commerce Product Recommendation Engine",
+      "truth": "UNRELATED",
+      "sim": 29.85,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 23,
+      "a": "Academic Plagiarism Detection System",
+      "b": "Smart Precision Irrigation System",
+      "truth": "UNRELATED",
+      "sim": 10.37,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 24,
+      "a": "Adaptive Traffic Signal Optimization",
+      "b": "AI Stock Portfolio Advisor",
+      "truth": "UNRELATED",
+      "sim": 37.2,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 25,
+      "a": "Hospital Appointment Booking Chatbot",
+      "b": "Retail Demand Forecasting & Inventory Optimizer",
+      "truth": "UNRELATED",
+      "sim": 36.82,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 26,
+      "a": "Movie Recommendation Streaming Platform",
+      "b": "Loan Default Risk Prediction System",
+      "truth": "UNRELATED",
+      "sim": 36.76,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 27,
+      "a": "Urban Air Quality Monitoring Network",
+      "b": "Automated Short-Answer Essay Grading System",
+      "truth": "UNRELATED",
+      "sim": 17.18,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 28,
+      "a": "Crop Yield Prediction from Weather & Soil Data",
+      "b": "Music Streaming Recommendation App",
+      "truth": "UNRELATED",
+      "sim": 24.86,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 29,
+      "a": "Disaster Response Coordination Platform",
+      "b": "AI Stock Portfolio Advisor",
+      "truth": "UNRELATED",
+      "sim": 17.59,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    },
+    {
+      "n": 30,
+      "a": "Plant Leaf Disease Detection using Deep Learning",
+      "b": "Smart Parking Availability System",
+      "truth": "UNRELATED",
+      "sim": 21.86,
+      "engine": "UNRELATED",
+      "opus": "UNRELATED"
+    }
+  ]
+}

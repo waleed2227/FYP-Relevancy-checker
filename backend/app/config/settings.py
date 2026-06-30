@@ -41,8 +41,21 @@ class Settings(BaseSettings):
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
     refresh_token_expire_days: int = 7
+    password_reset_token_expire_minutes: int = 30
 
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+
+    # Public base URL of the frontend (used to build password-reset links in emails)
+    frontend_base_url: str = "http://localhost:5173"
+
+    # SMTP — used to send password-reset emails. Leave smtp_host empty to disable email.
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+    smtp_from_email: str = ""
+    smtp_from_name: str = "AI FYP Relevancy System"
+    smtp_use_tls: bool = True
 
     upload_dir: str = "uploads"
     max_upload_size_mb: int = 10

@@ -2,7 +2,7 @@
 Sentence Transformer semantic embeddings (V2 prerequisite).
 
 Lazy singleton model loading gated by RELEVANCY_ENGINE_V2_ENABLED.
-Not integrated into relevancy scoring or duplicate detection yet.
+Used by embeddings.similarity_between() when V2 is enabled.
 """
 
 from __future__ import annotations

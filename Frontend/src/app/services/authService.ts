@@ -48,6 +48,20 @@ export async function register(payload: RegisterPayload): Promise<AuthUser> {
   return fetchMe();
 }
 
+export async function requestPasswordReset(email: string): Promise<{ message: string }> {
+  return api.post<{ message: string }>('/auth/forgot-password', { email });
+}
+
+export async function resetPassword(
+  token: string,
+  newPassword: string
+): Promise<{ message: string }> {
+  return api.post<{ message: string }>('/auth/reset-password', {
+    token,
+    new_password: newPassword,
+  });
+}
+
 export async function fetchMe(): Promise<AuthUser> {
   return api.get<AuthUser>('/auth/me');
 }

@@ -237,8 +237,8 @@ def main() -> int:
 
     print("Offline verification OK — model loads from local cache without network.")
     print("\nNext steps:")
-    print("  1. Keep RELEVANCY_ENGINE_V2_ENABLED=false until engine integration is complete.")
-    print("  2. Re-run this script after dependency or model updates.")
+    print("  1. Set RELEVANCY_ENGINE_V2_ENABLED=true in .env")
+    print("  2. Restart the backend and run: python -m scripts.backfill_all_relevancy --force")
     if cache_path:
         print(f"  3. Cached at: {cache_path}")
     return 0

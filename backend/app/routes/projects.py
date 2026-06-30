@@ -1,6 +1,6 @@
 """Project submission and relevancy API routes."""
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -9,7 +9,7 @@ from app.auth.dependencies import CurrentUser, ProfessorUser, StudentUser
 from app.database import get_db
 from app.models.professor import Professor
 from app.models.project import ProjectIdea
-from app.models.relevancy import RelevancyResult
+from app.models.relevancy import MatchedProject, RelevancyResult
 from app.models.student import Student
 from app.models.user import UserRole
 from app.schemas.project import (
@@ -27,6 +27,16 @@ from app.utils.exceptions import bad_request, not_found
 router = APIRouter(prefix="/projects", tags=["Projects"])
 
 
+def _can_use_project_search(user: CurrentUser) -> bool:
+    if user.role == UserRole.ADMIN:
+        return True
+    return bool(user.professor)
+
+
+def _can_view_project_detail(user: CurrentUser) -> bool:
+    return _can_use_project_search(user)
+
+
 def _can_view_project_relevancy(user: CurrentUser, project: ProjectIdea) -> bool:
     if user.role == UserRole.ADMIN:
         return True
@@ -38,6 +48,8 @@ def _can_view_project_relevancy(user: CurrentUser, project: ProjectIdea) -> bool
         if user.professor.user and project.professor_email:
             if project.professor_email.lower() == user.professor.user.email.lower():
                 return True
+        # Professors may view relevancy for any project when using search / matched-project drill-down
+        return True
     return False
 
 
@@ -108,6 +120,17 @@ async def review_queue(user: ProfessorUser, db: AsyncSession = Depends(get_db)):
     return await project_service.get_review_queue(db, user.professor)
 
 
+@router.get("/search", response_model=list[ReviewQueueItem], summary="Search approved projects by id, title, or description")
+async def search_projects(
+    user: CurrentUser,
+    q: str = Query("", min_length=0, max_length=200),
+    db: AsyncSession = Depends(get_db),
+):
+    if not _can_use_project_search(user):
+        raise bad_request("Not authorized")
+    return await project_service.search_projects(db, q)
+
+
 @router.get("/all", response_model=list[ReviewQueueItem], summary="All projects (professor/admin)")
 async def all_projects(user: CurrentUser, db: AsyncSession = Depends(get_db)):
     if user.role == UserRole.PROFESSOR and user.professor:
@@ -117,6 +140,7 @@ async def all_projects(user: CurrentUser, db: AsyncSession = Depends(get_db)):
             select(ProjectIdea)
             .options(
                 selectinload(ProjectIdea.student).selectinload(Student.user),
+                selectinload(ProjectIdea.professor).selectinload(Professor.user),
                 selectinload(ProjectIdea.relevancy_result),
             )
             .order_by(ProjectIdea.submitted_date.desc())
@@ -126,13 +150,25 @@ async def all_projects(user: CurrentUser, db: AsyncSession = Depends(get_db)):
     raise bad_request("Not authorized")
 
 
+@router.get("/{project_id}", response_model=ReviewQueueItem, summary="Get project details")
+async def get_project(project_id: int, user: CurrentUser, db: AsyncSession = Depends(get_db)):
+    if not _can_view_project_detail(user):
+        raise bad_request("Not authorized")
+    item = await project_service.get_project_detail(db, project_id)
+    if not item:
+        raise not_found("Project")
+    return item
+
+
 @router.get("/{project_id}/relevancy", response_model=RelevancyResultResponse, summary="Get relevancy results")
 async def get_relevancy(project_id: int, user: CurrentUser, db: AsyncSession = Depends(get_db)):
     result = await db.execute(
         select(ProjectIdea)
         .where(ProjectIdea.id == project_id)
         .options(
-            selectinload(ProjectIdea.relevancy_result).selectinload(RelevancyResult.matched_projects),
+            selectinload(ProjectIdea.relevancy_result)
+            .selectinload(RelevancyResult.matched_projects)
+            .selectinload(MatchedProject.matched_idea),
             selectinload(ProjectIdea.student).selectinload(Student.user),
             selectinload(ProjectIdea.professor).selectinload(Professor.user),
         )

@@ -29,10 +29,10 @@ aiofiles==24.1.0
 httpx==0.28.1
 
 # AI relevancy (cosine similarity)
-numpy==2.2.1
+numpy>=2.2.1
 
-# AI relevancy V2 prerequisites (semantic embeddings — not wired to scoring yet)
-# Python 3.12 compatible. On Windows CPU-only: pip install torch --index-url https://download.pytorch.org/whl/cpu
+# AI relevancy V2 — semantic embeddings (all-MiniLM-L6-v2, 384 dimensions)
+# Windows CPU-only torch: pip install torch --index-url https://download.pytorch.org/whl/cpu
 torch>=2.2.0,<3
 sentence-transformers>=3.3.0,<6
 

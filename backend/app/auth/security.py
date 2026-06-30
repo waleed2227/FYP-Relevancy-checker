@@ -1,5 +1,6 @@
 """Password hashing and JWT token utilities."""
 
+import hashlib
 from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
 
@@ -46,3 +47,30 @@ def verify_token(token: str, expected_type: str = "access") -> Optional[dict[str
         return payload
     except JWTError:
         return None
+
+
+def password_fingerprint(hashed_password: str) -> str:
+    """Short, deterministic fingerprint of a password hash.
+
+    Embedded in reset tokens so a token becomes invalid the moment the password
+    changes — this makes reset links effectively single-use without a DB table.
+    """
+    return hashlib.sha256(hashed_password.encode("utf-8")).hexdigest()[:16]
+
+
+def create_password_reset_token(user_id: str | int, hashed_password: str) -> str:
+    expire = datetime.now(timezone.utc) + timedelta(
+        minutes=settings.password_reset_token_expire_minutes
+    )
+    payload = {
+        "sub": str(user_id),
+        "exp": expire,
+        "type": "reset",
+        "fp": password_fingerprint(hashed_password),
+    }
+    return jwt.encode(payload, settings.secret_key, algorithm=settings.algorithm)
+
+
+def verify_password_reset_token(token: str) -> Optional[dict[str, Any]]:
+    """Decode a reset token; returns payload (with sub + fp) or None if invalid/expired."""
+    return verify_token(token, "reset")

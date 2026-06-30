@@ -3,7 +3,7 @@
 import json
 from datetime import date
 
-from sqlalchemy import and_, func, not_, or_, select
+from sqlalchemy import String, and_, cast, func, not_, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -129,6 +129,7 @@ def _to_relevancy_analysis_dict(project: ProjectIdea) -> dict:
     """Map a project row to the dict shape expected by RelevancyEngine.analyze."""
     data = {field: getattr(project, field, None) for field in RELEVANCY_TEXT_FIELDS}
     data["ai_technologies_used"] = project.ai_technologies_used
+    data["category"] = project.category
     data["id"] = project.id
     data["year"] = str(project.submitted_date.year)
     data["author"] = (
@@ -203,6 +204,7 @@ def _to_review_queue_item(project: ProjectIdea) -> ReviewQueueItem:
     """Build ReviewQueueItem from a project with eager-loaded student.user and relevancy_result."""
     student_user = project.student.user if project.student else None
     rel = project.relevancy_result
+    prof_user = project.professor.user if project.professor else None
     return ReviewQueueItem(
         id=project.id,
         studentName=student_user.full_name if student_user else "Unknown",
@@ -216,6 +218,8 @@ def _to_review_queue_item(project: ProjectIdea) -> ReviewQueueItem:
         description=project.description,
         **_proposal_fields(project),
         submittedDate=project.submitted_date.isoformat(),
+        professorName=prof_user.full_name if prof_user else None,
+        professorEmail=project.professor_email,
         relevancyScore=project.relevancy_score,
         status=project.status.value,
         feedback=project.feedback,
@@ -443,16 +447,25 @@ def build_relevancy_result_response(project: ProjectIdea, rel: RelevancyResult) 
             description="Alignment with current industry and research trends",
         ),
     ]
+    sorted_matches = sorted(
+        rel.matched_projects or [],
+        key=lambda m: m.similarity,
+        reverse=True,
+    )[:5]
     matched = [
         MatchedProjectResponse(
             id=m.id,
+            project_id=m.matched_project_id,
             title=m.title,
             similarity=m.similarity,
             year=m.year,
             author=m.author,
             status=m.status,
+            category=m.matched_idea.category if m.matched_idea else None,
+            risk_level=duplicate_service.similarity_to_risk(m.similarity).value.upper(),
+            description=m.matched_idea.description if m.matched_idea else None,
         )
-        for m in (rel.matched_projects or [])
+        for m in sorted_matches
     ]
     return RelevancyResultResponse(
         overall_score=rel.overall_score,
@@ -494,9 +507,13 @@ async def ensure_relevancy_explanation(
 
 
 async def run_relevancy_analysis(db: AsyncSession, project: ProjectIdea) -> RelevancyResult:
+    # Relevancy corpus = ONLY professor-approved projects already in the database.
+    # A newly submitted project is compared against this approved reference library,
+    # not against other pending/rejected/revision submissions.
     corpus_query = (
         select(ProjectIdea)
         .where(ProjectIdea.id != project.id)
+        .where(ProjectIdea.status == ProjectStatus.APPROVED)
         .where(
             not_(
                 and_(ProjectIdea.student_id == project.student_id, ProjectIdea.title == project.title)
@@ -505,7 +522,7 @@ async def run_relevancy_analysis(db: AsyncSession, project: ProjectIdea) -> Rele
         .options(selectinload(ProjectIdea.student).selectinload(Student.user))
         .order_by(ProjectIdea.submitted_date.desc())
     )
-    corpus_limit = get_settings().relevancy_corpus_limitm
+    corpus_limit = get_settings().relevancy_corpus_limit
     if corpus_limit > 0:
         corpus_query = corpus_query.limit(corpus_limit)
     result = await db.execute(corpus_query)
@@ -561,9 +578,14 @@ async def run_relevancy_analysis(db: AsyncSession, project: ProjectIdea) -> Rele
     }
     await _apply_explanation_to_relevancy(relevancy, project_dict, scores, analysis.matched)
     await db.flush()
-    await db.refresh(relevancy, attribute_names=["matched_projects"])
-
-    return relevancy
+    loaded = await db.execute(
+        select(RelevancyResult)
+        .where(RelevancyResult.id == relevancy.id)
+        .options(
+            selectinload(RelevancyResult.matched_projects).selectinload(MatchedProject.matched_idea)
+        )
+    )
+    return loaded.scalar_one()
 
 
 async def get_student_projects(db: AsyncSession, student_id: int) -> list[ProjectResponse]:
@@ -598,17 +620,84 @@ async def get_dashboard_stats(db: AsyncSession, student_id: int | None, professo
     return DashboardStats(total=total, approved=approved, pending=pending + revision, rejected=rejected)
 
 
-async def get_professor_submissions(db: AsyncSession, professor: Professor) -> list[ReviewQueueItem]:
-    result = await db.execute(
+_PROJECT_DETAIL_LOAD_OPTIONS = (
+    selectinload(ProjectIdea.student).selectinload(Student.user),
+    selectinload(ProjectIdea.professor).selectinload(Professor.user),
+    selectinload(ProjectIdea.relevancy_result),
+)
+
+
+async def search_projects(db: AsyncSession, query: str, *, limit: int = 500) -> list[ReviewQueueItem]:
+    """Browse/search approved projects only — the reference corpus for comparison.
+
+    Matches on project ID, project title, or project description (partial, case-insensitive).
+    Only APPROVED projects are ever returned, so this never exposes pending/rejected work.
+    """
+    term = query.strip()
+    stmt = (
         select(ProjectIdea)
-        .where(ProjectIdea.professor_id == professor.id)
-        .options(
-            selectinload(ProjectIdea.student).selectinload(Student.user),
-            selectinload(ProjectIdea.relevancy_result),
-        )
+        .where(ProjectIdea.status == ProjectStatus.APPROVED)
+        .options(*_PROJECT_DETAIL_LOAD_OPTIONS)
         .order_by(ProjectIdea.submitted_date.desc())
     )
+    if term:
+        pattern = f"%{term}%"
+        stmt = stmt.where(
+            or_(
+                cast(ProjectIdea.id, String).ilike(pattern),
+                ProjectIdea.title.ilike(pattern),
+                ProjectIdea.description.ilike(pattern),
+            )
+        )
+    stmt = stmt.limit(limit)
+    result = await db.execute(stmt)
     return [_to_review_queue_item(p) for p in result.scalars().all()]
+
+
+async def get_project_detail(db: AsyncSession, project_id: int) -> ReviewQueueItem | None:
+    result = await db.execute(
+        select(ProjectIdea)
+        .where(ProjectIdea.id == project_id)
+        .options(*_PROJECT_DETAIL_LOAD_OPTIONS)
+    )
+    project = result.scalar_one_or_none()
+    if not project:
+        return None
+    return _to_review_queue_item(project)
+
+
+async def get_professor_submissions(db: AsyncSession, professor: Professor) -> list[ReviewQueueItem]:
+    """All submissions assigned to this professor (by id or supervisor email)."""
+    await repair_orphan_professor_assignments(db)
+
+    prof_row = await db.execute(
+        select(Professor)
+        .where(Professor.id == professor.id)
+        .options(selectinload(Professor.user))
+    )
+    prof = prof_row.scalar_one()
+    prof_email = prof.user.email.lower() if prof.user else None
+
+    filters = [ProjectIdea.professor_id == professor.id]
+    if prof_email:
+        filters.append(
+            and_(
+                ProjectIdea.professor_id.is_(None),
+                func.lower(ProjectIdea.professor_email) == prof_email,
+            )
+        )
+
+    result = await db.execute(
+        select(ProjectIdea)
+        .where(or_(*filters))
+        .options(*_PROJECT_DETAIL_LOAD_OPTIONS)
+        .order_by(ProjectIdea.submitted_date.desc())
+    )
+    projects = result.scalars().all()
+    for p in projects:
+        if p.professor_id is None:
+            p.professor_id = professor.id
+    return [_to_review_queue_item(p) for p in projects]
 
 
 async def get_review_queue(db: AsyncSession, professor: Professor) -> list[ReviewQueueItem]:
@@ -638,6 +727,7 @@ async def get_review_queue(db: AsyncSession, professor: Professor) -> list[Revie
         .where(ProjectIdea.status == ProjectStatus.PENDING, or_(*filters))
         .options(
             selectinload(ProjectIdea.student).selectinload(Student.user),
+            selectinload(ProjectIdea.professor).selectinload(Professor.user),
             selectinload(ProjectIdea.relevancy_result),
         )
         .order_by(ProjectIdea.submitted_date.desc())

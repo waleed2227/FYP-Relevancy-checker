@@ -5,6 +5,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { resolveScreenForRole } from './navigation';
 import Login from './components/Login';
 import Registration from './components/Registration';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 import StudentDashboard from './components/StudentDashboard';
 import ProfessorDashboard from './components/ProfessorDashboard';
 import IdeaSubmissionForm from './components/IdeaSubmissionForm';
@@ -23,6 +25,8 @@ type UserRole = 'student' | 'professor' | 'admin' | null;
 type Screen =
   | 'login'
   | 'registration'
+  | 'forgot-password'
+  | 'reset-password'
   | 'dashboard'
   | 'submit-idea'
   | 'relevancy-results'
@@ -36,9 +40,19 @@ type Screen =
   | 'admin-professors'
   | 'admin-projects';
 
+function getResetTokenFromUrl(): string | null {
+  try {
+    return new URLSearchParams(window.location.search).get('reset_token');
+  } catch {
+    return null;
+  }
+}
+
 function AppContent() {
   const { userRole, isAuthenticated, login, logout } = useAuth();
+  const [resetToken, setResetToken] = useState<string | null>(() => getResetTokenFromUrl());
   const [currentScreen, setCurrentScreen] = useState<Screen>(() => {
+    if (getResetTokenFromUrl()) return 'reset-password';
     const savedScreen = localStorage.getItem('currentScreen');
     if (savedScreen && isAuthenticated) {
       return resolveScreenForRole(savedScreen, userRole) as Screen;
@@ -56,6 +70,10 @@ function AppContent() {
   }, [currentScreen, isAuthenticated]);
 
   useEffect(() => {
+    if (getResetTokenFromUrl()) {
+      setCurrentScreen('reset-password');
+      return;
+    }
     if (!isAuthenticated) {
       setCurrentScreen('login');
     } else {
@@ -83,7 +101,27 @@ function AppContent() {
     setCurrentScreen('registration');
   };
 
+  const handleShowForgotPassword = () => {
+    setCurrentScreen('forgot-password');
+  };
+
+  const clearResetTokenFromUrl = () => {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('reset_token');
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+    } catch {
+      // ignore
+    }
+  };
+
   const handleBackToLogin = () => {
+    setCurrentScreen('login');
+  };
+
+  const handleResetComplete = () => {
+    clearResetTokenFromUrl();
+    setResetToken(null);
     setCurrentScreen('login');
   };
 
@@ -118,8 +156,27 @@ function AppContent() {
   };
 
   const renderContent = () => {
+    if (currentScreen === 'reset-password') {
+      return (
+        <ResetPassword
+          token={resetToken ?? getResetTokenFromUrl() ?? ''}
+          onBackToLogin={handleResetComplete}
+        />
+      );
+    }
+
+    if (currentScreen === 'forgot-password') {
+      return <ForgotPassword onBackToLogin={handleBackToLogin} />;
+    }
+
     if (currentScreen === 'login') {
-      return <Login onLogin={handleLogin} onRegister={handleShowRegistration} />;
+      return (
+        <Login
+          onLogin={handleLogin}
+          onRegister={handleShowRegistration}
+          onForgotPassword={handleShowForgotPassword}
+        />
+      );
     }
 
     if (currentScreen === 'registration') {
@@ -212,7 +269,13 @@ function AppContent() {
       }
     }
 
-    return <Login onLogin={handleLogin} onRegister={handleShowRegistration} />;
+    return (
+      <Login
+        onLogin={handleLogin}
+        onRegister={handleShowRegistration}
+        onForgotPassword={handleShowForgotPassword}
+      />
+    );
   };
 
   return (

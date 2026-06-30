@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import { FileText, CheckCircle, XCircle, Clock, TrendingUp, Search, Mail, Loader2, AlertCircle } from 'lucide-react';
 import AdvancedReviewModal from './AdvancedReviewModal';
 import AIInsightsPanel, { buildProfessorDashboardInsights } from './AIInsightsPanel';
+import ProjectSearchPanel from './ProjectSearchPanel';
 import { useAuth } from '../context/AuthContext';
 import { api, ApiError, parseApiErrorDetail } from '../services/api';
 
@@ -20,6 +21,7 @@ export default function ProfessorDashboard({ onLogout, onNavigate }: ProfessorDa
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [submissionsVersion, setSubmissionsVersion] = useState(0);
 
   const loadAssigned = async () => {
     setLoading(true);
@@ -27,6 +29,7 @@ export default function ProfessorDashboard({ onLogout, onNavigate }: ProfessorDa
     try {
       const data = await api.get<any[]>('/projects/assigned');
       setSubmissions(data);
+      setSubmissionsVersion((v) => v + 1);
     } catch (err) {
       const message =
         err instanceof ApiError ? parseApiErrorDetail(err.detail ?? err.message) : 'Failed to load projects.';
@@ -121,6 +124,7 @@ export default function ProfessorDashboard({ onLogout, onNavigate }: ProfessorDa
       const label =
         action === 'approve' ? 'approved' : action === 'reject' ? 'rejected' : 'sent for revision';
       setSuccessMessage(`Project ${label} successfully.`);
+      await loadAssigned();
     } catch (err) {
       const message =
         err instanceof ApiError ? parseApiErrorDetail(err.detail ?? err.message) : 'Failed to submit review.';
@@ -256,7 +260,12 @@ export default function ProfessorDashboard({ onLogout, onNavigate }: ProfessorDa
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <FileText className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-                  <h2 className="text-gray-900 dark:text-white font-semibold">Project Submissions</h2>
+                  <div>
+                    <h2 className="text-gray-900 dark:text-white font-semibold">My Project Submissions</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                      {submissions.length} assigned to you — click a stat card to filter by status
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
@@ -393,6 +402,8 @@ export default function ProfessorDashboard({ onLogout, onNavigate }: ProfessorDa
               </table>
             </div>
           </div>
+
+          <ProjectSearchPanel className="mb-8" refreshKey={submissionsVersion} />
           </>
           )}
         </div>

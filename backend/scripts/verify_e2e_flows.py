@@ -5,11 +5,13 @@ Run from backend/: python -m scripts.verify_e2e_flows
 
 import asyncio
 import importlib.util
+import sys
 from pathlib import Path
 
-_spec = importlib.util.spec_from_file_location(
-    "bootstrap", Path(__file__).resolve().parent / "_bootstrap.py"
-)
+_bootstrap_path = Path(__file__).resolve().parent / "_bootstrap.py"
+_spec = importlib.util.spec_from_file_location("bootstrap", _bootstrap_path)
+if _spec is None or _spec.loader is None:
+    raise RuntimeError(f"Failed to load bootstrap from {_bootstrap_path}")
 _bootstrap = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_bootstrap)
 
@@ -40,19 +42,26 @@ async def main() -> None:
                 print("FAIL: backend not running on :8000")
                 return
 
-            # Registration uniqueness check (expect 400 if exists)
+            # Registration (200=new user, 400=already exists, 422=validation)
             reg = await client.post(
                 f"{BASE}/auth/register",
                 json={
                     "full_name": "E2E Test",
-                    "email": "e2e99999@student.uol.edu.pk",
+                    "email": "99999999@student.uol.edu.pk",
                     "password": "Student123",
                     "role": "student",
                     "student_id": "99999999",
                     "department": "Computer Science",
                 },
             )
-            results.append(("Registration endpoint", "PASS" if reg.status_code in (200, 400) else f"FAIL {reg.status_code}"))
+            results.append(
+                (
+                    "Registration endpoint",
+                    "PASS"
+                    if reg.status_code in (200, 400, 409)
+                    else f"FAIL {reg.status_code}",
+                )
+            )
 
             st_token = await login(client, *STUDENT, "student")
             pr_token = await login(client, *PROFESSOR, "professor")
@@ -108,8 +117,13 @@ async def main() -> None:
 
     print("E2E API verification")
     print("-" * 40)
+    failed = False
     for name, status in results:
         print(f"{status:6} {name}")
+        if status.startswith("FAIL"):
+            failed = True
+    if failed:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
